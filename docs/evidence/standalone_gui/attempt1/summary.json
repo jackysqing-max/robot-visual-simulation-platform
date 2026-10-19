@@ -1,0 +1,72 @@
+{
+  "domain": 93,
+  "display": ":1",
+  "gui": true,
+  "checks": {
+    "joint": {
+      "mode": "joint",
+      "action": "/lbr/joint_trajectory_controller/follow_joint_trajectory",
+      "result": {
+        "event": "succeeded",
+        "request_id": "d4fac93eaa29444c8bac87b0e7c7e372",
+        "action_status": 4,
+        "error_code": 0,
+        "reason": "Goal successfully reached!"
+      },
+      "start_joints": [
+        -2.030020397707096e-06,
+        0.349999978723107,
+        1.504632769052528e-36,
+        -0.9000133514193013,
+        -9.290423468965815e-07,
+        0.6499901968024763,
+        1.489079854456442e-07
+      ],
+      "final_joints": [
+        0.1799961309952482,
+        0.3499999623699476,
+        -5.901983272497355e-09,
+        -1.0200175744569835,
+        -2.1109531445469716e-06,
+        0.7299867134824993,
+        7.975012690338498e-07
+      ],
+      "target_xyz": [
+        0.5961122512817383,
+        0.10847297310829163,
+        0.7934184074401855
+      ],
+      "final_xyz": [
+        0.5961127877235413,
+        0.10847185552120209,
+        0.7934166789054871
+      ],
+      "final_joint_error_rad": 4.223037682216102e-06,
+      "final_position_error_m": 2.127111401539036e-06,
+      "final_orientation_error_rad": 2.5581435839982507e-06,
+      "sample_count": 165,
+      "max_joint_tracking_error_rad": 0.028478998049740162,
+      "max_position_tracking_error_m": 0.019740784605726463,
+      "max_orientation_tracking_error_rad": 0.04257303833943912,
+      "rms_position_tracking_error_m": 0.00516393304489793,
+      "passed": false
+    }
+  },
+  "screenshots": {
+    "initial": {
+      "width": 1024,
+      "height": 768,
+      "depth": 24,
+      "png": "initial.png",
+      "xwd": "initial.xwd"
+    }
+  },
+  "window": {
+    "id": "0x3800002",
+    "title": "Bullet Physics ExampleBrowser using OpenGL3+ [btgl] Release build",
+    "pid": null,
+    "identified_by": "new Bullet window after isolated launch"
+  },
+  "passed": false,
+  "error": "AssertionError({'event': 'succeeded', 'request_id': 'd4fac93eaa29444c8bac87b0e7c7e372', 'action_status': 4, 'error_code': 0, 'reason': 'Goal successfully reached!'})"
+}

@@ -1,0 +1,86 @@
+[INFO] [launch]: All log files can be found below /home/siqin/.ros/log/2026-10-19-18-34-54-979762-siqinY-computer-130080
+[INFO] [launch]: Default logging verbosity is set to INFO
+pybullet build time: Jan 29 2025 23:16:28
+[INFO] [sim_node-1]: process started with pid [130113]
+[INFO] [ros2_control_node-2]: process started with pid [130115]
+[INFO] [robot_state_publisher-3]: process started with pid [130117]
+[INFO] [spawner-4]: process started with pid [130119]
+[INFO] [motion_node-5]: process started with pid [130121]
+[robot_state_publisher-3] [INFO] [1792427695.100439624] [lbr.robot_state_publisher]: got segment lbr_link_0
+[robot_state_publisher-3] [INFO] [1792427695.100490200] [lbr.robot_state_publisher]: got segment lbr_link_1
+[robot_state_publisher-3] [INFO] [1792427695.100494531] [lbr.robot_state_publisher]: got segment lbr_link_2
+[robot_state_publisher-3] [INFO] [1792427695.100496785] [lbr.robot_state_publisher]: got segment lbr_link_3
+[robot_state_publisher-3] [INFO] [1792427695.100498727] [lbr.robot_state_publisher]: got segment lbr_link_4
+[robot_state_publisher-3] [INFO] [1792427695.100500546] [lbr.robot_state_publisher]: got segment lbr_link_5
+[robot_state_publisher-3] [INFO] [1792427695.100502406] [lbr.robot_state_publisher]: got segment lbr_link_6
+[robot_state_publisher-3] [INFO] [1792427695.100504100] [lbr.robot_state_publisher]: got segment lbr_link_7
+[robot_state_publisher-3] [INFO] [1792427695.100505796] [lbr.robot_state_publisher]: got segment world
+[ros2_control_node-2] [WARN] [1792427695.107378586] [lbr.controller_manager]: [Deprecated] Passing the robot description parameter directly to the control_manager node is deprecated. Use '~/robot_description' topic from 'robot_state_publisher' instead.
+[ros2_control_node-2] [INFO] [1792427695.107527852] [resource_manager]: Loading hardware 'PyBulletSystem' 
+[ros2_control_node-2] [INFO] [1792427695.109676317] [resource_manager]: Initialize hardware 'PyBulletSystem' 
+[sim_node-1] pybullet build time: Jan 29 2025 23:16:28
+[ros2_control_node-2] [INFO] [1792427695.118429366] [lbr_pybullet_hardware]: PyBullet bridge: /iiwa7/joint_states -> ros2_control -> /iiwa7/joint_desired
+[ros2_control_node-2] [INFO] [1792427695.118481161] [resource_manager]: Successful initialization of hardware 'PyBulletSystem'
+[ros2_control_node-2] [INFO] [1792427695.118640330] [resource_manager]: 'configure' hardware 'PyBulletSystem' 
+[ros2_control_node-2] [INFO] [1792427695.118645815] [resource_manager]: Successful 'configure' of hardware 'PyBulletSystem'
+[ros2_control_node-2] [INFO] [1792427695.118649172] [resource_manager]: 'activate' hardware 'PyBulletSystem' 
+[ros2_control_node-2] [INFO] [1792427695.118659957] [lbr_pybullet_hardware]: Waiting for measured PyBullet state (timeout 10.0 s)
+[spawner-4] [INFO] [1792427695.293741472] [spawner_joint_state_broadcaster]: waiting for service /lbr/controller_manager/list_controllers to become available...
+[motion_node-5] pybullet build time: Jan 29 2025 23:16:28
+[sim_node-1] [INFO] [1792427695.389098961] [lbr_pybullet_sim]: PyBullet iiwa physics ready at 240 Hz; end effector is link 7 in lbr_link_0
+[ros2_control_node-2] [INFO] [1792427695.391356790] [lbr_pybullet_hardware]: Activated at the measured joint positions
+[ros2_control_node-2] [INFO] [1792427695.391386011] [resource_manager]: Successful 'activate' of hardware 'PyBulletSystem'
+[ros2_control_node-2] [INFO] [1792427695.393261392] [lbr.controller_manager]: update rate is 100 Hz
+[ros2_control_node-2] [INFO] [1792427695.393274633] [lbr.controller_manager]: Spawning controller_manager RT thread with scheduler priority: 50
+[ros2_control_node-2] [WARN] [1792427695.393352231] [lbr.controller_manager]: No real-time kernel detected on this system. See [https://control.ros.org/master/doc/ros2_control/controller_manager/doc/userdoc.html] for details on how to enable realtime scheduling.
+[ros2_control_node-2] [INFO] [1792427695.546023094] [lbr.controller_manager]: Loading controller 'joint_state_broadcaster'
+[spawner-4] [INFO] [1792427695.554035021] [spawner_joint_state_broadcaster]: [94mLoaded [1mjoint_state_broadcaster[0m
+[ros2_control_node-2] [INFO] [1792427695.555153280] [lbr.controller_manager]: Configuring controller 'joint_state_broadcaster'
+[ros2_control_node-2] [INFO] [1792427695.555210394] [lbr.joint_state_broadcaster]: 'joints' or 'interfaces' parameter is empty. All available state interfaces will be published
+[spawner-4] [INFO] [1792427695.584085133] [spawner_joint_state_broadcaster]: [92mConfigured and activated [1mjoint_state_broadcaster[0m
+[INFO] [spawner-4]: process has finished cleanly [pid 130119]
+[INFO] [spawner-6]: process started with pid [130275]
+[spawner-6] [INFO] [1792427695.851676221] [spawner_joint_trajectory_controller]: waiting for service /lbr/controller_manager/list_controllers to become available...
+[ros2_control_node-2] [INFO] [1792427696.104022604] [lbr.controller_manager]: Loading controller 'joint_trajectory_controller'
+[ros2_control_node-2] [WARN] [1792427696.107962430] [lbr.joint_trajectory_controller]: [Deprecated]: "allow_nonzero_velocity_at_trajectory_end" is set to true. The default behavior will change to false.
+[spawner-6] [INFO] [1792427696.114122208] [spawner_joint_trajectory_controller]: [94mLoaded [1mjoint_trajectory_controller[0m
+[ros2_control_node-2] [INFO] [1792427696.115088409] [lbr.controller_manager]: Configuring controller 'joint_trajectory_controller'
+[ros2_control_node-2] [INFO] [1792427696.115183995] [lbr.joint_trajectory_controller]: No specific joint names are used for command interfaces. Using 'joints' parameter.
+[ros2_control_node-2] [INFO] [1792427696.115196968] [lbr.joint_trajectory_controller]: Command interfaces are [position] and state interfaces are [position velocity].
+[ros2_control_node-2] [INFO] [1792427696.115208394] [lbr.joint_trajectory_controller]: Using 'splines' interpolation method.
+[ros2_control_node-2] [INFO] [1792427696.115594882] [lbr.joint_trajectory_controller]: Controller state will be published at 50.00 Hz.
+[ros2_control_node-2] [INFO] [1792427696.116569886] [lbr.joint_trajectory_controller]: Action status changes will be monitored at 20.00 Hz.
+[spawner-6] [INFO] [1792427696.144264815] [spawner_joint_trajectory_controller]: [92mConfigured and activated [1mjoint_trajectory_controller[0m
+[ros2_control_node-2] [WARN] [1792427696.163614791] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[motion_node-5] [INFO] [1792427696.213419781] [lbr_tutorial_motion]: {"event": "ready", "request_id": null, "action": "/lbr/joint_trajectory_controller/follow_joint_trajectory"}
+[motion_node-5] [INFO] [1792427696.214425557] [lbr_tutorial_motion]: {"event": "accepted", "request_id": "0f3d6c6a5f2f428dbb21a5c397c36ccb", "kind": "joint", "points": 2, "duration": 4.0, "target": [0.19999816120294892, 0.349999980810183, -1.4456028966473395e-20, -0.9000121948366142, -8.310248504524051e-07, 0.6499910460797621, 1.2792924233809467e-07]}
+[ros2_control_node-2] [INFO] [1792427696.214736856] [lbr.joint_trajectory_controller]: Received new action goal
+[ros2_control_node-2] [INFO] [1792427696.214769648] [lbr.joint_trajectory_controller]: Accepted new action goal
+[INFO] [spawner-6]: process has finished cleanly [pid 130275]
+[ros2_control_node-2] [ERROR] [1792427696.973498981] [lbr_pybullet_hardware]: PyBullet feedback is stale (> 0.500 s); commands disabled
+[ros2_control_node-2] [WARN] [1792427697.173570414] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[motion_node-5] [INFO] [1792427697.405453607] [lbr_tutorial_motion]: {"event": "failed", "request_id": "0f3d6c6a5f2f428dbb21a5c397c36ccb", "reason": "feedback/action timeout; restart tutorial bringup to recover"}
+[ros2_control_node-2] [INFO] [1792427697.405475791] [lbr.joint_trajectory_controller]: Got request to cancel goal
+[ros2_control_node-2] [INFO] [1792427697.405497309] [lbr.joint_trajectory_controller]: Canceling active action goal because cancel callback received.
+[ros2_control_node-2] [WARN] [1792427698.183581113] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[sim_node-1] [WARN] [1792427698.274751745] [lbr_pybullet_sim]: Position command watchdog expired; holding current measured joints
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [motion_node-5]: sending signal 'SIGINT' to process[motion_node-5]
+[INFO] [robot_state_publisher-3]: sending signal 'SIGINT' to process[robot_state_publisher-3]
+[INFO] [ros2_control_node-2]: sending signal 'SIGINT' to process[ros2_control_node-2]
+[INFO] [sim_node-1]: sending signal 'SIGINT' to process[sim_node-1]
+[robot_state_publisher-3] [INFO] [1792427698.281117976] [rclcpp]: signal_handler(signum=2)
+[ros2_control_node-2] [INFO] [1792427698.281457097] [rclcpp]: signal_handler(signum=2)
+[ros2_control_node-2] [INFO] [1792427698.281687550] [lbr.controller_manager]: Shutdown request received....
+[ros2_control_node-2] [INFO] [1792427698.281737070] [lbr.controller_manager]: Shutting down all controllers in the controller manager.
+[ros2_control_node-2] [INFO] [1792427698.281759726] [lbr.controller_manager]: Deactivating controller 'joint_state_broadcaster'
+[ros2_control_node-2] [INFO] [1792427698.281788871] [lbr.controller_manager]: Shutting down controller 'joint_state_broadcaster'
+[ros2_control_node-2] [INFO] [1792427698.281802857] [lbr.controller_manager]: Deactivating controller 'joint_trajectory_controller'
+[ros2_control_node-2] [INFO] [1792427698.281814168] [lbr.controller_manager]: Shutting down controller 'joint_trajectory_controller'
+[ros2_control_node-2] [INFO] [1792427698.281823954] [resource_manager]: 'shutdown' hardware 'PyBulletSystem' 
+[ros2_control_node-2] [INFO] [1792427698.281827356] [resource_manager]: Successful 'shutdown' of hardware 'PyBulletSystem'
+[ros2_control_node-2] [INFO] [1792427698.281829103] [lbr.controller_manager]: Shutting down the controller manager.
+[INFO] [robot_state_publisher-3]: process has finished cleanly [pid 130117]
+[INFO] [ros2_control_node-2]: process has finished cleanly [pid 130115]
+[INFO] [sim_node-1]: process has finished cleanly [pid 130113]
+[INFO] [motion_node-5]: process has finished cleanly [pid 130121]

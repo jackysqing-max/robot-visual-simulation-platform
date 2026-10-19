@@ -1,0 +1,22 @@
+{
+  "repository": "https://github.com/lbr-stack/lbr_fri_ros2_stack",
+  "branch": "humble",
+  "commit": "52f816bd59cbd2390efc890cca0ad61389e4ccb3",
+  "files": [
+    {
+      "upstream_path": "lbr_description/ros2_control/lbr_controllers.yaml",
+      "local_path": "src/lbr_pybullet_tutorial/config/lbr_controllers.upstream.yaml",
+      "sha256": "20dd8c5afc71bb1f0a6efe4cce8ecb2574fd444730e8fd526cf0922c88990b93"
+    },
+    {
+      "upstream_path": "lbr_demos/lbr_demos_py/lbr_demos_py/joint_trajectory_client.py",
+      "local_path": "third_party/lbr_stack/joint_trajectory_client.py",
+      "sha256": "79107a3aed5932acab45421154e26a9f04af5daee1de66b625440905c3aeaaf8"
+    },
+    {
+      "upstream_path": "LICENSE",
+      "local_path": "third_party/lbr_stack/LICENSE",
+      "sha256": "3c50cdcbd7d116786c123e1d6ad26403207cfd3c8f3f5b90eb947d6477394f76"
+    }
+  ]
+}

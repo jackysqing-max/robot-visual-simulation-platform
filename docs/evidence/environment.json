@@ -1,0 +1,7 @@
+{
+  "recorded_at": "2026-10-19T18:35:30.777872+02:00",
+  "python": "3.10.12",
+  "platform": "Linux-6.8.0-107-generic-x86_64-with-glibc2.35",
+  "pybullet": "3.2.7",
+  "ros_packages": "ros-humble-controller-manager 2.52.2-1jammy.20251118.234745\nros-humble-joint-trajectory-controller 2.50.2-1jammy.20251119.000046\nros-humble-ros2-control 2.52.2-1jammy.20251119.003402\n"
+}

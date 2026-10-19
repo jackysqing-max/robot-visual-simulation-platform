@@ -1,0 +1,16 @@
+/**/joint_trajectory_controller:
+  ros__parameters:
+    # Keep measured feedback; do not substitute commands for actual joint state.
+    open_loop_control: false
+    allow_partial_joints_goal: false
+    interpolation_method: splines
+    constraints:
+      goal_time: 3.0
+      stopped_velocity_tolerance: 0.03
+      lbr_A1: {trajectory: 0.20, goal: 0.02}
+      lbr_A2: {trajectory: 0.20, goal: 0.02}
+      lbr_A3: {trajectory: 0.20, goal: 0.02}
+      lbr_A4: {trajectory: 0.20, goal: 0.02}
+      lbr_A5: {trajectory: 0.20, goal: 0.02}
+      lbr_A6: {trajectory: 0.20, goal: 0.02}
+      lbr_A7: {trajectory: 0.20, goal: 0.02}

@@ -1,0 +1,162 @@
+{
+  "domain": 93,
+  "display": ":1",
+  "gui": true,
+  "checks": {
+    "joint": {
+      "mode": "joint",
+      "action": "/lbr/joint_trajectory_controller/follow_joint_trajectory",
+      "result": {
+        "event": "succeeded",
+        "request_id": "8a9562a4bfe6441abde7def5dde270a1",
+        "action_status": 4,
+        "error_code": 0,
+        "reason": "Goal successfully reached!"
+      },
+      "start_joints": [
+        -2.030020397490276e-06,
+        0.349999978723107,
+        1.4456028966473395e-20,
+        -0.900013351419286,
+        -9.290423482622429e-07,
+        0.6499901968024875,
+        1.4890798639904831e-07
+      ],
+      "final_joints": [
+        0.17999615641809838,
+        0.3499999604570798,
+        -5.669574978005255e-09,
+        -1.0200176253961692,
+        -2.1524168545074484e-06,
+        0.7299867383198247,
+        8.195477012890027e-07
+      ],
+      "target_xyz": [
+        0.5961122512817383,
+        0.10847297310829163,
+        0.7934184074401855
+      ],
+      "final_xyz": [
+        0.5961127877235413,
+        0.10847187042236328,
+        0.7934167385101318
+      ],
+      "final_joint_error_rad": 4.2739768832955605e-06,
+      "final_position_error_m": 2.070993382107221e-06,
+      "final_orientation_error_rad": 2.609703454851054e-06,
+      "sample_count": 164,
+      "max_joint_tracking_error_rad": 0.0025917975892499473,
+      "max_position_tracking_error_m": 0.0017978792475973934,
+      "max_orientation_tracking_error_rad": 0.003875039251693146,
+      "rms_position_tracking_error_m": 0.0010384413479481173,
+      "passed": true
+    },
+    "cartesian": {
+      "mode": "cartesian",
+      "action": "/lbr/joint_trajectory_controller/follow_joint_trajectory",
+      "result": {
+        "event": "succeeded",
+        "request_id": "94dfbba2a047449fade952d22f139e2f",
+        "action_status": 4,
+        "error_code": 0,
+        "reason": "Goal successfully reached!"
+      },
+      "start_joints": [
+        0.17999615641809838,
+        0.3499999604570798,
+        -5.669574978005255e-09,
+        -1.0200176253961692,
+        -2.1524168545074484e-06,
+        0.7299867383198247,
+        8.195477012890027e-07
+      ],
+      "final_joints": [
+        0.1848555725675677,
+        0.3498219036252839,
+        -0.007614384666235553,
+        -1.0203265997198523,
+        0.004932458100342669,
+        0.7298628765309993,
+        -0.0025809455367825497
+      ],
+      "target_xyz": [
+        0.5961127877235413,
+        0.10847187042236328,
+        0.7934167385101318
+      ],
+      "final_xyz": [
+        0.5960497260093689,
+        0.10846837610006332,
+        0.7933946847915649
+      ],
+      "final_joint_error_rad": 0.0001234877339053586,
+      "final_position_error_m": 6.689810599202799e-05,
+      "final_orientation_error_rad": 8.168772531547392e-06,
+      "sample_count": 130,
+      "max_joint_tracking_error_rad": 0.004522101963855052,
+      "max_position_tracking_error_m": 0.0018138743664825264,
+      "max_orientation_tracking_error_rad": 7.552287187095736e-06,
+      "rms_position_tracking_error_m": 0.0010218499814789192,
+      "path_vertices": [
+        [
+          0.5961127877235413,
+          0.10847187042236328,
+          0.7934167385101318
+        ],
+        [
+          0.5961127877235413,
+          0.13847187042236328,
+          0.7934167385101318
+        ],
+        [
+          0.5661127877235412,
+          0.13847187042236328,
+          0.7934167385101318
+        ],
+        [
+          0.5661127877235412,
+          0.10847187042236328,
+          0.7934167385101318
+        ],
+        [
+          0.5961127877235413,
+          0.10847187042236328,
+          0.7934167385101318
+        ]
+      ],
+      "max_actual_path_deviation_m": 0.0002562371204798074,
+      "max_desired_path_deviation_m": 2.7563999801706073e-05,
+      "passed": true
+    }
+  },
+  "screenshots": {
+    "initial": {
+      "width": 1024,
+      "height": 768,
+      "depth": 24,
+      "png": "initial.png",
+      "xwd": "initial.xwd"
+    },
+    "joint": {
+      "width": 1024,
+      "height": 768,
+      "depth": 24,
+      "png": "joint.png",
+      "xwd": "joint.xwd"
+    },
+    "cartesian": {
+      "width": 1024,
+      "height": 768,
+      "depth": 24,
+      "png": "cartesian.png",
+      "xwd": "cartesian.xwd"
+    }
+  },
+  "window": {
+    "id": "0x3800002",
+    "title": "Bullet Physics ExampleBrowser using OpenGL3+ [btgl] Release build",
+    "pid": null,
+    "identified_by": "new Bullet window after isolated launch"
+  },
+  "passed": true
+}

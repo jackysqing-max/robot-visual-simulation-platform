@@ -1,0 +1,8 @@
+[INFO] [launch]: All log files can be found below /home/siqin/.ros/log/2026-10-19-19-00-06-638770-siqinY-computer-142392
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [sim_node-1]: process started with pid [142417]
+[sim_node-1] pybullet build time: Jan 29 2025 23:16:28
+[sim_node-1] [INFO] [1792429206.930961168] [lbr_pybullet_sim]: PyBullet iiwa physics ready at 240 Hz; end effector is link 7 in lbr_link_0
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [sim_node-1]: sending signal 'SIGINT' to process[sim_node-1]
+[INFO] [sim_node-1]: process has finished cleanly [pid 142417]

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>lbr_pybullet_control</name>
+  <version>0.1.0</version>
+  <description>ROS 2 control hardware interface for the PyBullet iiwa simulator.</description>
+  <maintainer email="maintainer@example.com">Tutorial Maintainer</maintainer>
+  <license>Apache-2.0</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <depend>hardware_interface</depend>
+  <depend>pluginlib</depend>
+  <depend>rclcpp</depend>
+  <depend>rclcpp_lifecycle</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

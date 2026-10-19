@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<library path="lbr_pybullet_control">
+  <class name="lbr_pybullet_control/PyBulletSystem"
+         type="lbr_pybullet_control::PyBulletSystem"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>Position commands and measured joint feedback for the PyBullet iiwa.</description>
+  </class>
+</library>

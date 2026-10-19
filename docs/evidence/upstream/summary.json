@@ -1,0 +1,175 @@
+{
+  "backend": "tutorial",
+  "domain": 91,
+  "checks": {
+    "joint": {
+      "mode": "joint",
+      "action": "/lbr/joint_trajectory_controller/follow_joint_trajectory",
+      "result": {
+        "event": "succeeded",
+        "request_id": "770e85efd03a47ba95053ffd0f123303",
+        "action_status": 4,
+        "error_code": 0,
+        "reason": "Goal successfully reached!"
+      },
+      "start_joints": [
+        -2.1719275258399087e-06,
+        0.34999997711388187,
+        7.228014483236699e-21,
+        -0.9000141360163898,
+        -1.0094403898143645e-06,
+        0.6499896206218144,
+        1.6954520357482954e-07
+      ],
+      "final_joints": [
+        0.1799960139621915,
+        0.34999995899152303,
+        -5.279563533891713e-09,
+        -1.0200184087186275,
+        -2.231526350984737e-06,
+        0.729986161385191,
+        8.396358902219225e-07
+      ],
+      "target_xyz": [
+        0.5961123704910278,
+        0.10847288370132446,
+        0.7934181094169617
+      ],
+      "final_xyz": [
+        0.596112847328186,
+        0.10847179591655731,
+        0.7934163808822632
+      ],
+      "final_joint_error_rad": 4.272702237573256e-06,
+      "final_position_error_m": 2.097255725694877e-06,
+      "final_orientation_error_rad": 2.642509931047261e-06,
+      "sample_count": 155,
+      "max_joint_tracking_error_rad": 0.0012913309248212407,
+      "max_position_tracking_error_m": 0.0008947816760774297,
+      "max_orientation_tracking_error_rad": 0.0019292202017327372,
+      "rms_position_tracking_error_m": 0.0006078956267567531,
+      "passed": true
+    },
+    "cartesian": {
+      "mode": "cartesian",
+      "action": "/lbr/joint_trajectory_controller/follow_joint_trajectory",
+      "result": {
+        "event": "succeeded",
+        "request_id": "85de97bb01734da88bcd42512603a47d",
+        "action_status": 4,
+        "error_code": 0,
+        "reason": "Goal successfully reached!"
+      },
+      "start_joints": [
+        0.1799960139621915,
+        0.34999995899152303,
+        -5.279563533891713e-09,
+        -1.0200184087186275,
+        -2.231526350984737e-06,
+        0.729986161385191,
+        8.396358902219225e-07
+      ],
+      "final_joints": [
+        0.18484371113051645,
+        0.34988428469634875,
+        -0.0076077287448486144,
+        -1.0202450185887508,
+        0.004940135099197893,
+        0.7298826201345132,
+        -0.0025907448372432234
+      ],
+      "target_xyz": [
+        0.596112847328186,
+        0.10847179591655731,
+        0.7934163808822632
+      ],
+      "final_xyz": [
+        0.5960730910301208,
+        0.10846883058547974,
+        0.7933931946754456
+      ],
+      "final_joint_error_rad": 4.09733503292653e-05,
+      "final_position_error_m": 4.611893982776797e-05,
+      "final_orientation_error_rad": 6.690140140833385e-06,
+      "sample_count": 117,
+      "max_joint_tracking_error_rad": 0.0029564443894198877,
+      "max_position_tracking_error_m": 0.000837088117179007,
+      "max_orientation_tracking_error_rad": 6.550208769229596e-06,
+      "rms_position_tracking_error_m": 0.0007139242399740777,
+      "path_vertices": [
+        [
+          0.596112847328186,
+          0.10847179591655731,
+          0.7934163808822632
+        ],
+        [
+          0.596112847328186,
+          0.1384717959165573,
+          0.7934163808822632
+        ],
+        [
+          0.566112847328186,
+          0.1384717959165573,
+          0.7934163808822632
+        ],
+        [
+          0.566112847328186,
+          0.10847179591655731,
+          0.7934163808822632
+        ],
+        [
+          0.596112847328186,
+          0.10847179591655731,
+          0.7934163808822632
+        ]
+      ],
+      "max_actual_path_deviation_m": 0.00017771388741186372,
+      "max_desired_path_deviation_m": 2.7563999801706073e-05,
+      "passed": true
+    },
+    "duplicate_names": {
+      "event": "rejected",
+      "request_id": "c633d58c87b547229b4b7ceead5e45f7",
+      "kind": "joint",
+      "reason": "provide seven unique lbr_A1..lbr_A7 joint names"
+    },
+    "unreachable_pose": {
+      "event": "rejected",
+      "request_id": "67c49b3434284d7191274c239d831e0c",
+      "kind": "pose",
+      "reason": "IK did not converge within joint limits: position error=0.001923 m, orientation error=0.000126 rad"
+    },
+    "invalid_frame": {
+      "event": "rejected",
+      "request_id": "7a3028e149a941f58de5740fa64cc516",
+      "kind": "pose",
+      "reason": "frame_id must be world or lbr_link_0 (no implicit TF)"
+    },
+    "single_pose_goal": {
+      "event": "succeeded",
+      "request_id": "f6da87186acc441e85bff01d485473c4",
+      "action_status": 4,
+      "error_code": 0,
+      "reason": "Goal successfully reached!"
+    },
+    "busy": {
+      "event": "rejected",
+      "request_id": "a7eee43a6e2e4c0ea51660b4a767cb33",
+      "kind": "joint",
+      "reason": "busy: finish or cancel the active trajectory first"
+    },
+    "cancel": {
+      "event": "failed",
+      "request_id": "f742fee5b3644466adff5c109bef9f2d",
+      "action_status": 5,
+      "error_code": 0,
+      "reason": ""
+    },
+    "unmodified_lbr_stack_client": {
+      "passed": true,
+      "accepted_trajectories": 2,
+      "final_joint_max_abs_rad": 2.0720429009416232e-06
+    }
+  },
+  "passed": true
+}

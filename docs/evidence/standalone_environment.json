@@ -1,0 +1,7 @@
+{
+  "recorded_at": "2026-10-19T19:05:16.362862+02:00",
+  "python": "3.10.12",
+  "pybullet": "3.2.7",
+  "platform": "Linux-6.8.0-107-generic-x86_64-with-glibc2.35",
+  "workspace": "/home/siqin/ros2_workspaces/lbr_pybullet_ros"
+}

@@ -1,0 +1,50 @@
+{
+  "domain": 92,
+  "backend": "tutorial",
+  "checks": {
+    "trajectory_executing_before_fault": {
+      "passed": true,
+      "request_id": "0f3d6c6a5f2f428dbb21a5c397c36ccb",
+      "commands_received": 108,
+      "accepted": {
+        "event": "accepted",
+        "request_id": "0f3d6c6a5f2f428dbb21a5c397c36ccb",
+        "kind": "joint",
+        "points": 2,
+        "duration": 4.0,
+        "target": [
+          0.19999816120294892,
+          0.349999980810183,
+          -1.4456028966473395e-20,
+          -0.9000121948366142,
+          -8.310248504524051e-07,
+          0.6499910460797621,
+          1.2792924233809467e-07
+        ]
+      }
+    },
+    "application_feedback_timeout": {
+      "passed": true,
+      "failure_latency_s": 0.9405235349986469,
+      "terminal": {
+        "event": "failed",
+        "request_id": "0f3d6c6a5f2f428dbb21a5c397c36ccb",
+        "reason": "feedback/action timeout; restart tutorial bringup to recover"
+      }
+    },
+    "commands_stop_after_feedback_loss": {
+      "passed": true,
+      "commands_before_fault": 108,
+      "commands_during_timeout_grace": 50,
+      "quiet_window_start_after_fault_s": 1.0,
+      "quiet_window_duration_s": 0.7999999999992724,
+      "commands_in_quiet_window": 0,
+      "last_command_after_fault_s": 0.49895537300108117
+    },
+    "hardware_reports_stale_feedback": {
+      "passed": true
+    }
+  },
+  "passed": true,
+  "simulator_pid": 130113
+}

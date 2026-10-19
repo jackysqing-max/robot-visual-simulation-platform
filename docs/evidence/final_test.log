@@ -1,0 +1,345 @@
+pybullet build time: Jan 29 2025 23:16:28
+......................................................                   [100%]
+54 passed in 0.53s
+pybullet build time: Jan 29 2025 23:16:28
+{
+  "backend": "tutorial",
+  "domain": 89,
+  "checks": {
+    "joint": {
+      "mode": "joint",
+      "action": "/lbr/joint_trajectory_controller/follow_joint_trajectory",
+      "result": {
+        "event": "succeeded",
+        "request_id": "2dd78bc84e22436ebb5c88009c24487d",
+        "action_status": 4,
+        "error_code": 0,
+        "reason": "Goal successfully reached!"
+      },
+      "start_joints": [
+        -1.8397769281793684e-06,
+        0.3499999808034367,
+        -7.228014483236696e-21,
+        -0.900012205580625,
+        -8.310264295540256e-07,
+        0.6499910381939882,
+        1.277054184575424e-07
+      ],
+      "final_joints": [
+        0.1799963458103709,
+        0.3499999626045001,
+        -4.834924778883372e-09,
+        -1.0200164779856489,
+        -2.052894604587632e-06,
+        0.7299875786852076,
+        7.97664810609262e-07
+      ],
+      "target_xyz": [
+        0.5961121916770935,
+        0.10847306996583939,
+        0.7934188842773438
+      ],
+      "final_xyz": [
+        0.5961126685142517,
+        0.10847198218107224,
+        0.7934171557426453
+      ],
+      "final_joint_error_rad": 4.272405023986181e-06,
+      "final_position_error_m": 2.097255725694877e-06,
+      "final_orientation_error_rad": 2.609873617760298e-06,
+      "sample_count": 157,
+      "max_joint_tracking_error_rad": 0.0014124856142261472,
+      "max_position_tracking_error_m": 0.000979217084925381,
+      "max_orientation_tracking_error_rad": 0.002111158761117049,
+      "rms_position_tracking_error_m": 0.0006171030198473482,
+      "passed": true
+    },
+    "cartesian": {
+      "mode": "cartesian",
+      "action": "/lbr/joint_trajectory_controller/follow_joint_trajectory",
+      "result": {
+        "event": "succeeded",
+        "request_id": "c14b3a96c12e467dae0297d21c152d88",
+        "action_status": 4,
+        "error_code": 0,
+        "reason": "Goal successfully reached!"
+      },
+      "start_joints": [
+        0.1799963725997132,
+        0.3499999599760511,
+        -2.3691131416510163e-09,
+        -1.0200165492776336,
+        -2.1203630445673412e-06,
+        0.7299876139433359,
+        8.342961243507688e-07
+      ],
+      "final_joints": [
+        0.18484106059357283,
+        0.3499022011780126,
+        -0.007605649804380435,
+        -1.020219536364222,
+        0.004942832750587517,
+        0.7298898739993825,
+        -0.002593768942173269
+      ],
+      "target_xyz": [
+        0.5961126685142517,
+        0.10847199708223343,
+        0.7934170961380005
+      ],
+      "final_xyz": [
+        0.5960795283317566,
+        0.10846949368715286,
+        0.793393611907959
+      ],
+      "final_joint_error_rad": 1.718978558340467e-05,
+      "final_position_error_m": 4.069456650931854e-05,
+      "final_orientation_error_rad": 5.633033128096057e-06,
+      "sample_count": 119,
+      "max_joint_tracking_error_rad": 0.002729962773119876,
+      "max_position_tracking_error_m": 0.0007778882978576919,
+      "max_orientation_tracking_error_rad": 5.960240955932252e-06,
+      "rms_position_tracking_error_m": 0.000705815565006029,
+      "path_vertices": [
+        [
+          0.5961126685142517,
+          0.10847199708223343,
+          0.7934170961380005
+        ],
+        [
+          0.5961126685142517,
+          0.13847199708223343,
+          0.7934170961380005
+        ],
+        [
+          0.5661126685142517,
+          0.13847199708223343,
+          0.7934170961380005
+        ],
+        [
+          0.5661126685142517,
+          0.10847199708223343,
+          0.7934170961380005
+        ],
+        [
+          0.5961126685142517,
+          0.10847199708223343,
+          0.7934170961380005
+        ]
+      ],
+      "max_actual_path_deviation_m": 8.963956439872934e-05,
+      "max_desired_path_deviation_m": 3.0547158333527723e-05,
+      "passed": true
+    },
+    "duplicate_names": {
+      "event": "rejected",
+      "request_id": "0cfba63fa57044beb77e67c34c2b10cb",
+      "kind": "joint",
+      "reason": "provide seven unique lbr_A1..lbr_A7 joint names"
+    },
+    "unreachable_pose": {
+      "event": "rejected",
+      "request_id": "fdcd364ceedc408fa9c86b1610805dc2",
+      "kind": "pose",
+      "reason": "IK did not converge within joint limits: position error=0.001929 m, orientation error=0.000127 rad"
+    },
+    "invalid_frame": {
+      "event": "rejected",
+      "request_id": "e21e77886ab4441f91ca13589305f51f",
+      "kind": "pose",
+      "reason": "frame_id must be world or lbr_link_0 (no implicit TF)"
+    },
+    "single_pose_goal": {
+      "event": "succeeded",
+      "request_id": "373b8e54fa6b4383be0ab821d0e687c7",
+      "action_status": 4,
+      "error_code": 0,
+      "reason": "Goal successfully reached!"
+    },
+    "busy": {
+      "event": "rejected",
+      "request_id": "ccf4e81f97ae4e9aa2579f038b305ce5",
+      "kind": "joint",
+      "reason": "busy: finish or cancel the active trajectory first"
+    },
+    "cancel": {
+      "event": "failed",
+      "request_id": "19adab76ba104f40aa3e3bfd5b34cd69",
+      "action_status": 5,
+      "error_code": 0,
+      "reason": "trajectory canceled"
+    }
+  },
+  "passed": true
+}
+pybullet build time: Jan 29 2025 23:16:28
+{
+  "backend": "existing",
+  "domain": 90,
+  "checks": {
+    "joint": {
+      "mode": "joint",
+      "action": "/lbr/joint_trajectory_controller/follow_joint_trajectory",
+      "result": {
+        "event": "succeeded",
+        "request_id": "97437f3f975d4b85aafaba496ca57be1",
+        "action_status": 4,
+        "error_code": 0,
+        "reason": "Goal successfully reached!"
+      },
+      "start_joints": [
+        -2.66795062215408e-06,
+        0.3499999722024094,
+        -1.7347234759768068e-20,
+        -0.9000177489824817,
+        -1.199998451116846e-06,
+        0.6499869680698229,
+        1.8181324325032907e-07
+      ],
+      "final_joints": [
+        0.17999344002101833,
+        0.3499999471760435,
+        -7.268869382846128e-09,
+        -1.0200242647695437,
+        -2.8447948155909548e-06,
+        0.7299804868976887,
+        1.0780271138449877e-06
+      ],
+      "target_xyz": [
+        0.5961126089096069,
+        0.10847263038158417,
+        0.7934166193008423
+      ],
+      "final_xyz": [
+        0.5961135625839233,
+        0.10847030580043793,
+        0.7934141159057617
+      ],
+      "final_joint_error_rad": 6.5157870621224134e-06,
+      "final_position_error_m": 3.546852003767929e-06,
+      "final_orientation_error_rad": 4.7341624647579875e-06,
+      "sample_count": 155,
+      "max_joint_tracking_error_rad": 0.0015508876241877023,
+      "max_position_tracking_error_m": 0.0010754646207944724,
+      "max_orientation_tracking_error_rad": 0.002317216329060175,
+      "rms_position_tracking_error_m": 0.0007730586054507581,
+      "passed": true
+    },
+    "cartesian": {
+      "mode": "cartesian",
+      "action": "/lbr/joint_trajectory_controller/follow_joint_trajectory",
+      "result": {
+        "event": "succeeded",
+        "request_id": "2ada03b76b0c4c7483adc5d549274072",
+        "action_status": 4,
+        "error_code": 0,
+        "reason": "Goal successfully reached!"
+      },
+      "start_joints": [
+        0.17999385634803927,
+        0.3499999411746774,
+        -4.088739027874322e-09,
+        -1.0200247445034922,
+        -3.1036211436237364e-06,
+        0.7299807636199857,
+        1.2213899662427e-06
+      ],
+      "final_joints": [
+        0.18486112347021186,
+        0.34977466912300686,
+        -0.007618529198947689,
+        -1.0203985890510292,
+        0.00492478542404503,
+        0.7298394986812606,
+        -0.0025723785427506965
+      ],
+      "target_xyz": [
+        0.5961135625839233,
+        0.10847054421901703,
+        0.7934138774871826
+      ],
+      "final_xyz": [
+        0.5960330963134766,
+        0.10846637934446335,
+        0.7933916449546814
+      ],
+      "final_joint_error_rad": 0.0001883436718819187,
+      "final_position_error_m": 8.358500081401951e-05,
+      "final_orientation_error_rad": 9.72405527124877e-06,
+      "sample_count": 117,
+      "max_joint_tracking_error_rad": 0.003349841293876832,
+      "max_position_tracking_error_m": 0.000989690834034886,
+      "max_orientation_tracking_error_rad": 9.338832461512122e-06,
+      "rms_position_tracking_error_m": 0.0008923440193603644,
+      "path_vertices": [
+        [
+          0.5961135625839233,
+          0.10847054421901703,
+          0.7934138774871826
+        ],
+        [
+          0.5961135625839233,
+          0.13847054421901703,
+          0.7934138774871826
+        ],
+        [
+          0.5661135625839233,
+          0.13847054421901703,
+          0.7934138774871826
+        ],
+        [
+          0.5661135625839233,
+          0.10847054421901703,
+          0.7934138774871826
+        ],
+        [
+          0.5961135625839233,
+          0.10847054421901703,
+          0.7934138774871826
+        ]
+      ],
+      "max_actual_path_deviation_m": 0.00018392798976553764,
+      "max_desired_path_deviation_m": 2.8045278802146544e-05,
+      "passed": true
+    },
+    "duplicate_names": {
+      "event": "rejected",
+      "request_id": "7ec4c838828e46798e214eb72ea8794f",
+      "kind": "joint",
+      "reason": "provide seven unique lbr_A1..lbr_A7 joint names"
+    },
+    "unreachable_pose": {
+      "event": "rejected",
+      "request_id": "b0d544592441441eb838d8448fd6f425",
+      "kind": "pose",
+      "reason": "IK did not converge within joint limits: position error=0.001885 m, orientation error=0.000124 rad"
+    },
+    "invalid_frame": {
+      "event": "rejected",
+      "request_id": "c87acb1652cb4e5f9c0c93ce22c30aed",
+      "kind": "pose",
+      "reason": "frame_id must be world or lbr_link_0 (no implicit TF)"
+    },
+    "single_pose_goal": {
+      "event": "succeeded",
+      "request_id": "194a27e207904279957ec14e3d55f545",
+      "action_status": 4,
+      "error_code": 0,
+      "reason": "Goal successfully reached!"
+    },
+    "busy": {
+      "event": "rejected",
+      "request_id": "091e127c207e4d9bb9b8bc2234259f6c",
+      "kind": "joint",
+      "reason": "busy: finish or cancel the active trajectory first"
+    },
+    "cancel": {
+      "event": "failed",
+      "request_id": "2cb95f2e1f8c458c906df4881964fc63",
+      "action_status": 5,
+      "error_code": 0,
+      "reason": "trajectory canceled"
+    }
+  },
+  "passed": true
+}

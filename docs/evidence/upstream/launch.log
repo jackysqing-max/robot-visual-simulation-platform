@@ -1,0 +1,146 @@
+[INFO] [launch]: All log files can be found below /home/siqin/.ros/log/2026-10-19-18-33-07-132450-siqinY-computer-128206
+[INFO] [launch]: Default logging verbosity is set to INFO
+pybullet build time: Jan 29 2025 23:16:28
+[INFO] [sim_node-1]: process started with pid [128243]
+[INFO] [ros2_control_node-2]: process started with pid [128245]
+[INFO] [robot_state_publisher-3]: process started with pid [128247]
+[INFO] [spawner-4]: process started with pid [128249]
+[INFO] [motion_node-5]: process started with pid [128251]
+[robot_state_publisher-3] [INFO] [1792427587.258924582] [lbr.robot_state_publisher]: got segment lbr_link_0
+[robot_state_publisher-3] [INFO] [1792427587.258973252] [lbr.robot_state_publisher]: got segment lbr_link_1
+[robot_state_publisher-3] [INFO] [1792427587.258977363] [lbr.robot_state_publisher]: got segment lbr_link_2
+[robot_state_publisher-3] [INFO] [1792427587.258979527] [lbr.robot_state_publisher]: got segment lbr_link_3
+[robot_state_publisher-3] [INFO] [1792427587.258981716] [lbr.robot_state_publisher]: got segment lbr_link_4
+[robot_state_publisher-3] [INFO] [1792427587.258983482] [lbr.robot_state_publisher]: got segment lbr_link_5
+[robot_state_publisher-3] [INFO] [1792427587.258985315] [lbr.robot_state_publisher]: got segment lbr_link_6
+[robot_state_publisher-3] [INFO] [1792427587.258987063] [lbr.robot_state_publisher]: got segment lbr_link_7
+[robot_state_publisher-3] [INFO] [1792427587.258988830] [lbr.robot_state_publisher]: got segment world
+[ros2_control_node-2] [WARN] [1792427587.265959450] [lbr.controller_manager]: [Deprecated] Passing the robot description parameter directly to the control_manager node is deprecated. Use '~/robot_description' topic from 'robot_state_publisher' instead.
+[ros2_control_node-2] [INFO] [1792427587.266122454] [resource_manager]: Loading hardware 'PyBulletSystem' 
+[ros2_control_node-2] [INFO] [1792427587.267413339] [resource_manager]: Initialize hardware 'PyBulletSystem' 
+[ros2_control_node-2] [INFO] [1792427587.270596487] [lbr_pybullet_hardware]: PyBullet bridge: /iiwa7/joint_states -> ros2_control -> /iiwa7/joint_desired
+[ros2_control_node-2] [INFO] [1792427587.270639983] [resource_manager]: Successful initialization of hardware 'PyBulletSystem'
+[ros2_control_node-2] [INFO] [1792427587.270775136] [resource_manager]: 'configure' hardware 'PyBulletSystem' 
+[ros2_control_node-2] [INFO] [1792427587.270780785] [resource_manager]: Successful 'configure' of hardware 'PyBulletSystem'
+[ros2_control_node-2] [INFO] [1792427587.270784129] [resource_manager]: 'activate' hardware 'PyBulletSystem' 
+[ros2_control_node-2] [INFO] [1792427587.270794220] [lbr_pybullet_hardware]: Waiting for measured PyBullet state (timeout 10.0 s)
+[sim_node-1] pybullet build time: Jan 29 2025 23:16:28
+[spawner-4] [INFO] [1792427587.458248834] [spawner_joint_state_broadcaster]: waiting for service /lbr/controller_manager/list_controllers to become available...
+[motion_node-5] pybullet build time: Jan 29 2025 23:16:28
+[sim_node-1] [INFO] [1792427587.575233362] [lbr_pybullet_sim]: PyBullet iiwa physics ready at 240 Hz; end effector is link 7 in lbr_link_0
+[ros2_control_node-2] [INFO] [1792427587.584366988] [lbr_pybullet_hardware]: Activated at the measured joint positions
+[ros2_control_node-2] [INFO] [1792427587.584396709] [resource_manager]: Successful 'activate' of hardware 'PyBulletSystem'
+[ros2_control_node-2] [INFO] [1792427587.586520042] [lbr.controller_manager]: update rate is 100 Hz
+[ros2_control_node-2] [INFO] [1792427587.586533528] [lbr.controller_manager]: Spawning controller_manager RT thread with scheduler priority: 50
+[ros2_control_node-2] [WARN] [1792427587.586722409] [lbr.controller_manager]: No real-time kernel detected on this system. See [https://control.ros.org/master/doc/ros2_control/controller_manager/doc/userdoc.html] for details on how to enable realtime scheduling.
+[ros2_control_node-2] [INFO] [1792427587.709615716] [lbr.controller_manager]: Loading controller 'joint_state_broadcaster'
+[spawner-4] [INFO] [1792427587.717440432] [spawner_joint_state_broadcaster]: [94mLoaded [1mjoint_state_broadcaster[0m
+[ros2_control_node-2] [INFO] [1792427587.799190181] [lbr.controller_manager]: Configuring controller 'joint_state_broadcaster'
+[ros2_control_node-2] [INFO] [1792427587.799273416] [lbr.joint_state_broadcaster]: 'joints' or 'interfaces' parameter is empty. All available state interfaces will be published
+[spawner-4] [INFO] [1792427587.827475574] [spawner_joint_state_broadcaster]: [92mConfigured and activated [1mjoint_state_broadcaster[0m
+[INFO] [spawner-4]: process has finished cleanly [pid 128249]
+[INFO] [spawner-6]: process started with pid [128393]
+[ros2_control_node-2] [INFO] [1792427588.138282195] [lbr.controller_manager]: Loading controller 'joint_trajectory_controller'
+[ros2_control_node-2] [WARN] [1792427588.143259401] [lbr.joint_trajectory_controller]: [Deprecated]: "allow_nonzero_velocity_at_trajectory_end" is set to true. The default behavior will change to false.
+[spawner-6] [INFO] [1792427588.153301446] [spawner_joint_trajectory_controller]: [94mLoaded [1mjoint_trajectory_controller[0m
+[ros2_control_node-2] [INFO] [1792427588.153993854] [lbr.controller_manager]: Configuring controller 'joint_trajectory_controller'
+[ros2_control_node-2] [INFO] [1792427588.154111832] [lbr.joint_trajectory_controller]: No specific joint names are used for command interfaces. Using 'joints' parameter.
+[ros2_control_node-2] [INFO] [1792427588.154124570] [lbr.joint_trajectory_controller]: Command interfaces are [position] and state interfaces are [position velocity].
+[ros2_control_node-2] [INFO] [1792427588.154140040] [lbr.joint_trajectory_controller]: Using 'splines' interpolation method.
+[ros2_control_node-2] [INFO] [1792427588.154579614] [lbr.joint_trajectory_controller]: Controller state will be published at 50.00 Hz.
+[ros2_control_node-2] [INFO] [1792427588.155451786] [lbr.joint_trajectory_controller]: Action status changes will be monitored at 20.00 Hz.
+[spawner-6] [INFO] [1792427588.177559048] [spawner_joint_trajectory_controller]: [92mConfigured and activated [1mjoint_trajectory_controller[0m
+[ros2_control_node-2] [WARN] [1792427588.196989041] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[INFO] [spawner-6]: process has finished cleanly [pid 128393]
+[motion_node-5] [INFO] [1792427588.371174990] [lbr_tutorial_motion]: {"event": "ready", "request_id": null, "action": "/lbr/joint_trajectory_controller/follow_joint_trajectory"}
+[motion_node-5] [INFO] [1792427588.372488884] [lbr_tutorial_motion]: {"event": "accepted", "request_id": "770e85efd03a47ba95053ffd0f123303", "kind": "joint", "points": 2, "duration": 4.0, "target": [0.17999782807247416, 0.34999997711388187, 7.228014483236699e-21, -1.02001413601639, -1.0094403898143645e-06, 0.7299896206218144, 1.6954520357482954e-07]}
+[ros2_control_node-2] [INFO] [1792427588.373076012] [lbr.joint_trajectory_controller]: Received new action goal
+[ros2_control_node-2] [INFO] [1792427588.373115533] [lbr.joint_trajectory_controller]: Accepted new action goal
+[ros2_control_node-2] [WARN] [1792427589.197221370] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427590.206854604] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427591.226965510] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427592.236901528] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [INFO] [1792427592.386879069] [lbr.joint_trajectory_controller]: Goal reached, success!
+[motion_node-5] [INFO] [1792427592.424541462] [lbr_tutorial_motion]: {"event": "succeeded", "request_id": "770e85efd03a47ba95053ffd0f123303", "action_status": 4, "error_code": 0, "reason": "Goal successfully reached!"}
+[motion_node-5] [INFO] [1792427592.460323112] [lbr_tutorial_motion]: {"event": "accepted", "request_id": "85de97bb01734da88bcd42512603a47d", "kind": "cartesian_path", "points": 33, "duration": 3.0, "target": [0.18484058094981418, 0.34991202408276073, -0.007604523953557025, -1.0202040452384216, 0.004945286989651768, 0.7298950012044163, -0.002596055788541975]}
+[ros2_control_node-2] [INFO] [1792427592.460669517] [lbr.joint_trajectory_controller]: Received new action goal
+[ros2_control_node-2] [INFO] [1792427592.460722555] [lbr.joint_trajectory_controller]: Accepted new action goal
+[ros2_control_node-2] [WARN] [1792427593.236908393] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427594.237037397] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427595.237618300] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [INFO] [1792427595.466923804] [lbr.joint_trajectory_controller]: Goal reached, success!
+[motion_node-5] [INFO] [1792427595.511620659] [lbr_tutorial_motion]: {"event": "succeeded", "request_id": "85de97bb01734da88bcd42512603a47d", "action_status": 4, "error_code": 0, "reason": "Goal successfully reached!"}
+[motion_node-5] [INFO] [1792427595.523256905] [lbr_tutorial_motion]: {"event": "rejected", "request_id": "c633d58c87b547229b4b7ceead5e45f7", "kind": "joint", "reason": "provide seven unique lbr_A1..lbr_A7 joint names"}
+[motion_node-5] [INFO] [1792427595.570617343] [lbr_tutorial_motion]: {"event": "rejected", "request_id": "67c49b3434284d7191274c239d831e0c", "kind": "pose", "reason": "IK did not converge within joint limits: position error=0.001923 m, orientation error=0.000126 rad"}
+[motion_node-5] [INFO] [1792427595.571873841] [lbr_tutorial_motion]: {"event": "rejected", "request_id": "7a3028e149a941f58de5740fa64cc516", "kind": "pose", "reason": "frame_id must be world or lbr_link_0 (no implicit TF)"}
+[motion_node-5] [INFO] [1792427595.574808894] [lbr_tutorial_motion]: {"event": "accepted", "request_id": "f6da87186acc441e85bff01d485473c4", "kind": "pose", "points": 4, "duration": 0.2502488505900633, "target": [0.18926537732117246, 0.32330171502853844, -0.008862732980872258, -1.0561802955168305, 0.0010134507708254084, 0.7205350497994902, 0.002105940163576647]}
+[ros2_control_node-2] [INFO] [1792427595.575015607] [lbr.joint_trajectory_controller]: Received new action goal
+[ros2_control_node-2] [INFO] [1792427595.575046967] [lbr.joint_trajectory_controller]: Accepted new action goal
+[ros2_control_node-2] [INFO] [1792427595.836842412] [lbr.joint_trajectory_controller]: Goal reached, success!
+[motion_node-5] [INFO] [1792427595.877648230] [lbr_tutorial_motion]: {"event": "succeeded", "request_id": "f6da87186acc441e85bff01d485473c4", "action_status": 4, "error_code": 0, "reason": "Goal successfully reached!"}
+[motion_node-5] [INFO] [1792427595.879116471] [lbr_tutorial_motion]: {"event": "accepted", "request_id": "f742fee5b3644466adff5c109bef9f2d", "kind": "joint", "points": 2, "duration": 4.0, "target": [0.3892593915429695, 0.32333734055718, -0.008859816521082215, -1.0561373786534032, 0.0010193750425636944, 0.7205436218997826, 0.0020994397891906285]}
+[ros2_control_node-2] [INFO] [1792427595.879268332] [lbr.joint_trajectory_controller]: Received new action goal
+[ros2_control_node-2] [INFO] [1792427595.879297490] [lbr.joint_trajectory_controller]: Accepted new action goal
+[motion_node-5] [INFO] [1792427595.879784383] [lbr_tutorial_motion]: {"event": "rejected", "request_id": "a7eee43a6e2e4c0ea51660b4a767cb33", "kind": "joint", "reason": "busy: finish or cancel the active trajectory first"}
+[ros2_control_node-2] [INFO] [1792427595.880170121] [lbr.joint_trajectory_controller]: Got request to cancel goal
+[ros2_control_node-2] [INFO] [1792427595.880190700] [lbr.joint_trajectory_controller]: Canceling active action goal because cancel callback received.
+[motion_node-5] [INFO] [1792427595.930201045] [lbr_tutorial_motion]: {"event": "failed", "request_id": "f742fee5b3644466adff5c109bef9f2d", "action_status": 5, "error_code": 0, "reason": ""}
+[ros2_control_node-2] [WARN] [1792427596.256892128] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [INFO] [1792427597.148215777] [lbr.joint_trajectory_controller]: Received new action goal
+[ros2_control_node-2] [INFO] [1792427597.148242102] [lbr.joint_trajectory_controller]: Accepted new action goal
+[ros2_control_node-2] [WARN] [1792427597.267477974] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427598.286884528] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427599.286934171] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427600.297158240] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427601.326850012] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427602.346964134] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427603.366857678] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427604.377048902] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427605.397077801] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427606.416855850] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427607.426965790] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427608.456829765] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427609.466856942] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427610.466864096] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427611.466930256] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [INFO] [1792427612.157261778] [lbr.joint_trajectory_controller]: Goal reached, success!
+[ros2_control_node-2] [INFO] [1792427612.200728328] [lbr.joint_trajectory_controller]: Received new action goal
+[ros2_control_node-2] [INFO] [1792427612.200754041] [lbr.joint_trajectory_controller]: Accepted new action goal
+[ros2_control_node-2] [WARN] [1792427612.477659721] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427613.486859696] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427614.486905372] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427615.506909259] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427616.526868921] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427617.547066262] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427618.566945886] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427619.587237049] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427620.598678175] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427621.616911699] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427622.616934062] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427623.626868781] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427624.626872141] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427625.636939551] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [WARN] [1792427626.656877506] [lbr.joint_trajectory_controller]: Subscription to deprecated ~/state topic. Use ~/controller_state instead.
+[ros2_control_node-2] [INFO] [1792427627.216854248] [lbr.joint_trajectory_controller]: Goal reached, success!
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [motion_node-5]: sending signal 'SIGINT' to process[motion_node-5]
+[INFO] [robot_state_publisher-3]: sending signal 'SIGINT' to process[robot_state_publisher-3]
+[INFO] [ros2_control_node-2]: sending signal 'SIGINT' to process[ros2_control_node-2]
+[INFO] [sim_node-1]: sending signal 'SIGINT' to process[sim_node-1]
+[robot_state_publisher-3] [INFO] [1792427627.381179926] [rclcpp]: signal_handler(signum=2)
+[ros2_control_node-2] [INFO] [1792427627.381746872] [rclcpp]: signal_handler(signum=2)
+[ros2_control_node-2] [INFO] [1792427627.381815401] [lbr.controller_manager]: Shutdown request received....
+[ros2_control_node-2] [INFO] [1792427627.381853723] [lbr.controller_manager]: Shutting down all controllers in the controller manager.
+[ros2_control_node-2] [INFO] [1792427627.381867330] [lbr.controller_manager]: Deactivating controller 'joint_state_broadcaster'
+[ros2_control_node-2] [INFO] [1792427627.381903733] [lbr.controller_manager]: Shutting down controller 'joint_state_broadcaster'
+[ros2_control_node-2] [INFO] [1792427627.381922205] [lbr.controller_manager]: Deactivating controller 'joint_trajectory_controller'
+[ros2_control_node-2] [INFO] [1792427627.381933893] [lbr.controller_manager]: Shutting down controller 'joint_trajectory_controller'
+[ros2_control_node-2] [INFO] [1792427627.381944240] [resource_manager]: 'deactivate' hardware 'PyBulletSystem' 
+[ros2_control_node-2] [INFO] [1792427627.381949534] [resource_manager]: Successful 'deactivate' of hardware 'PyBulletSystem'
+[ros2_control_node-2] [INFO] [1792427627.381951003] [resource_manager]: 'shutdown' hardware 'PyBulletSystem' 
+[ros2_control_node-2] [INFO] [1792427627.381952967] [resource_manager]: Successful 'shutdown' of hardware 'PyBulletSystem'
+[ros2_control_node-2] [INFO] [1792427627.381954416] [lbr.controller_manager]: Shutting down the controller manager.
+[INFO] [robot_state_publisher-3]: process has finished cleanly [pid 128247]
+[INFO] [ros2_control_node-2]: process has finished cleanly [pid 128245]
+[INFO] [sim_node-1]: process has finished cleanly [pid 128243]
+[INFO] [motion_node-5]: process has finished cleanly [pid 128251]

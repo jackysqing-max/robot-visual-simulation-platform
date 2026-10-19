@@ -1,0 +1,5 @@
+[INFO] [1792427597.147557315] [lbr.joint_trajectory_client]: Action server available.
+[INFO] [1792427597.147864789] [lbr.joint_trajectory_client]: Rotating odd joints.
+[INFO] [1792427597.149074037] [lbr.joint_trajectory_client]: Goal was accepted by server.
+[INFO] [1792427612.200295887] [lbr.joint_trajectory_client]: Moving to zero position.
+[INFO] [1792427612.201933305] [lbr.joint_trajectory_client]: Goal was accepted by server.

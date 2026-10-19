@@ -1,0 +1,15 @@
+LBR PyBullet Tutorial
+
+Original tutorial implementation: Apache-2.0.
+The unmodified LBR Stack configuration and demo client are from
+https://github.com/lbr-stack/lbr_fri_ros2_stack
+commit 52f816bd59cbd2390efc890cca0ad61389e4ccb3 (Humble).
+See third_party/lbr_stack/LICENSE and provenance.json for license and hashes.
+
+The physics model is loaded from the separately installed pybullet_data package,
+kuka_iiwa/model.urdf. Its original BSD notice is preserved when generating the
+ROS robot description. PyBullet is an external dependency, not vendored here.
+
+The trajectory controller is the installed ros2_controllers implementation,
+configured using the original LBR Stack YAML. No FRI SDK, hardware driver, or
+LBR-specific Cartesian controller is included in this simulation project.

@@ -136,3 +136,18 @@ action 的 `SUCCESSFUL` 是控制器执行结果，物理状态对比是另一�
 M1–M5 的语言理解、分割、标定、抓取与最终任务评估在 [学生计划](student_plan.md) 中列出。当前工程的关节或笛卡尔 demo 通过后，只能把运控预备环节标为完成；应用成果需要自己的逐场景证据。
 
 图形模式复测中，首次启动曾出现一次 19.74 mm 的采样跟踪误差，超过 15 mm 门限；该次动作成功但整体验收失败。同一代码与门限的后续运行通过，原始失败报告保存在 `evidence/standalone_gui/attempt1/`。GUI 渲染与系统负载会影响定时器调度，验收应保留全部运行记录。窗口可用鼠标调整视角，绿色实测轨迹可能被机械臂局部遮挡。
+
+## Robot Workbench UI 验证
+
+全英文桌面 UI 的真实窗口联调通过。测试在隔离 ROS domain 中启动本窗口拥有的仿真进程，并验证：实时图像与控制器反馈、界面关节目标执行、切换探针后重启模型、179 mm TCP 偏移、TCP 小位移、项目保存/打开，以及导入六轴机器人后的实际预览与控制禁用。测试结束后自己的仿真进程正常回收。
+
+- [工作台联调报告](evidence/workbench/summary.json)
+- [82 项单元检查](evidence/workbench/unit_tests.txt)，包含导入模型、工具变换、TCP FK/IK 和 URDF 关节顺序验证
+- [原控制链路回归](evidence/workbench/control_regression.json)
+- [原 Robot Monitor 在主窗口中的嵌入报告](evidence/workbench/legacy_monitor_summary.json)：X11 父窗口确认为 UI 容器，Qt6 监控器及只读 ROS 适配器均正常退出；同次检查也验证 OBJ 器械实际加载及 120 mm TCP 偏移
+
+![Robot Workbench with probe](evidence/workbench/probe.png)
+
+![Original Robot Monitor embedded in the workbench](evidence/workbench/legacy_monitor.png)
+
+这些检查验证刚性器械配置及仿真运控。固定夹爪未增加手指驱动，其他轴数仅预览，不代表通用机器人或真实抓取已验收。

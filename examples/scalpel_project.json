@@ -1,0 +1,30 @@
+{
+  "robot_urdf": "",
+  "flange_link": "",
+  "tool": "tools/scalpel.obj",
+  "mesh_scale": [
+    0.001,
+    0.001,
+    0.001
+  ],
+  "mount_xyz": [
+    0,
+    0,
+    0
+  ],
+  "mount_rpy": [
+    0,
+    0,
+    0
+  ],
+  "tcp_xyz": [
+    0,
+    0,
+    0.12
+  ],
+  "tcp_rpy": [
+    0,
+    0,
+    0
+  ]
+}

@@ -6,6 +6,22 @@
 
 [Google 文档可粘贴正文](docs/google_docs_copy.txt) · [DOCX 版本](docs/google_docs_copy.docx) · [快速开始](docs/quickstart.md) · [接口](docs/interfaces.md) · [学生计划](docs/student_plan.md) · [验证记录](docs/validation.md)
 
+## 英文桌面 UI
+
+```bash
+sudo apt-get install python3-pyqt5
+./scripts/setup.sh
+./scripts/run_workbench.sh --start
+```
+
+界面支持导入机器人 URDF、导入末端 URDF/STL/OBJ、切换探针和固定夹爪，设置安装偏移与 TCP，保存/打开项目，并通过 ROS 2 执行关节和 TCP 运动。中心画面来自实际仿真；底部 Robot Monitor 显示关节位置、速度、力矩及跟踪误差，可停靠或浮动。`View → Legacy Robot Monitor` 可嵌入原有 Qt6 监控窗口。
+
+兼容的七轴模型使用现有 LBR 控制链路；其他模型提供明确标注的预览模式。末端为刚性装配，夹爪手指驱动不在本版范围内。
+
+[英文 UI 操作指南](docs/workbench.md) · [探针示例项目](examples/probe_project.json) · [OBJ 器械示例](examples/scalpel_project.json)
+
+![Robot Workbench](docs/evidence/workbench/probe.png)
+
 ## 安装与可视化
 
 在已安装 ROS 2 Humble 的 Ubuntu 22.04 上：
@@ -13,7 +29,7 @@
 ```bash
 sudo apt-get install ros-humble-ros2-control ros-humble-ros2-controllers \
   ros-humble-robot-state-publisher python3-colcon-common-extensions \
-  python3-numpy python3-pip python3-pytest
+  python3-numpy python3-pip python3-pytest python3-pyqt5
 /usr/bin/python3 -m pip install --user -r requirements.txt
 ./scripts/setup.sh
 ```

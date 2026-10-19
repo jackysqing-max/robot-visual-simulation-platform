@@ -1,0 +1,30 @@
+{
+  "robot_urdf": "",
+  "flange_link": "",
+  "tool": "gripper",
+  "mesh_scale": [
+    1,
+    1,
+    1
+  ],
+  "mount_xyz": [
+    0,
+    0,
+    0
+  ],
+  "mount_rpy": [
+    0,
+    0,
+    0
+  ],
+  "tcp_xyz": [
+    0,
+    0,
+    0.12
+  ],
+  "tcp_rpy": [
+    0,
+    0,
+    0
+  ]
+}

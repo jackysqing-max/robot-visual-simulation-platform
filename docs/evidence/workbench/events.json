@@ -1,0 +1,64 @@
+[
+  {
+    "event": "ready",
+    "request_id": null,
+    "action": "/lbr/joint_trajectory_controller/follow_joint_trajectory",
+    "observed_at": 1.3938825010009168
+  },
+  {
+    "event": "accepted",
+    "request_id": "428734c69fdc4e99bd2ab127606cb766",
+    "kind": "joint",
+    "points": 2,
+    "duration": 4.0,
+    "target": [
+      0.06,
+      0.35,
+      -0.0,
+      -0.9,
+      -0.0,
+      0.65,
+      0.0
+    ],
+    "observed_at": 1.8991265749973536
+  },
+  {
+    "event": "succeeded",
+    "request_id": "428734c69fdc4e99bd2ab127606cb766",
+    "action_status": 4,
+    "error_code": 0,
+    "reason": "Goal successfully reached!",
+    "observed_at": 5.950000856999395
+  },
+  {
+    "event": "ready",
+    "request_id": null,
+    "action": "/lbr/joint_trajectory_controller/follow_joint_trajectory",
+    "observed_at": 11.112393583000085
+  },
+  {
+    "event": "accepted",
+    "request_id": "ca11e7f7bbbc4217bc63dc8637100b2b",
+    "kind": "pose",
+    "points": 4,
+    "duration": 0.251240032201677,
+    "target": [
+      -5.790018943033143e-07,
+      0.3796070259509816,
+      1.0196915563202803e-06,
+      -0.8583644500272678,
+      -7.648884488407925e-07,
+      0.6626803085224141,
+      3.6473020558979774e-07
+    ],
+    "observed_at": 11.354491490998043
+  },
+  {
+    "event": "succeeded",
+    "request_id": "ca11e7f7bbbc4217bc63dc8637100b2b",
+    "action_status": 4,
+    "error_code": 0,
+    "reason": "Goal successfully reached!",
+    "observed_at": 11.64830321000045
+  }
+]

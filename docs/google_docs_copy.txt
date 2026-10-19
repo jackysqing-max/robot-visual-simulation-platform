@@ -139,3 +139,7 @@ export LBR_TUTORIAL_LEGACY_WS=/home/siqin/ros2_workspaces/humble/ros2_pybullet_w
 T0 构建与控制器激活 → T1 关节目标及反馈 → T2 FK/IK 与笛卡尔轨迹 → T3 topic、状态、取消 → T4 仿真与控制拆分、旧后端接入 → T5 编写应用适配器。
 
 随后按 M1～M5 推进：M1 接入 llm_ros 和 sam3_ros，校验指令与分割结果；M2 对齐 RGB-D、恢复三维并标定相机到基座；M3 生成抓取候选，检查 TCP、IK、关节和碰撞约束；M4 用状态机串行执行接近、夹持、搬运与释放，并验证物理结果；M5 固定场景评估成功率、误差、延迟和失败原因。每阶段保存输入、配置、日志及结果，上一阶段验收后再接入下一阶段。
+
+9. 全英文桌面 UI
+
+使用 ./scripts/run_workbench.sh --start 启动 Robot Workbench。左侧导入机器人 URDF 和末端 URDF/STL/OBJ，选择安装连杆，配置安装位置、角度、缩放及 TCP；Apply & Reload 更新自己启动的仿真。中心显示真实仿真画面，下方提供关节/TCP 控制和 Robot Monitor。可以保存及重新打开 JSON 项目。View → Legacy Robot Monitor 可选择原有监控器与工作区，把实际 Qt6 窗口嵌入子模块。七轴兼容模型提供轨迹控制，其他轴数明确显示 Preview Only。末端以刚性器械装配，固定夹爪示例不含手指驱动。

@@ -9,24 +9,25 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
 
-from lbr_pybullet_tutorial.model import INITIAL_Q, robot_description
+from lbr_pybullet_tutorial.model import initial_positions, robot_description
 
 
 def launch_setup(context):
     gui = LaunchConfiguration('gui').perform(context).lower() == 'true'
     backend = LaunchConfiguration('sim_backend').perform(context)
+    render = LaunchConfiguration('render_camera').perform(context).lower() == 'true'
     share = Path(get_package_share_directory('lbr_pybullet_tutorial'))
     description = robot_description()
     simulation = []
     if backend == 'tutorial':
         simulation = [Node(package='lbr_pybullet_tutorial', executable='sim_node',
                            output='screen', parameters=[
-                               {'gui': gui, 'initial_q': list(INITIAL_Q)}])]
+                               {'gui': gui, 'initial_q': initial_positions(), 'render_camera': render}])]
     elif backend == 'existing':
         simulation = [Node(package='pybullet_ros2_sim', executable='iiwa_pybullet_sim_node',
                            output='screen', parameters=[{
                        'gui': gui, 'initial_control_mode': 1, 'use_goto': False,
-                       'reset_to_init_on_start': True, 'init_q': list(INITIAL_Q),
+                       'reset_to_init_on_start': True, 'init_q': initial_positions(),
                        'enable_rgbd_camera': False,
                    }])]
     elif backend != 'external':
@@ -55,6 +56,7 @@ def launch_setup(context):
 def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument('gui', default_value='false', choices=['true', 'false']),
+        DeclareLaunchArgument('render_camera', default_value='false', choices=['true', 'false']),
         DeclareLaunchArgument('sim_backend', default_value='tutorial',
                               choices=['tutorial', 'external', 'existing'],
                               description='tutorial: bundled simulator; external: existing ROS node; '

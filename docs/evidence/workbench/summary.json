@@ -1,0 +1,122 @@
+{
+  "passed": true,
+  "ros_domain": 95,
+  "qt_platform": "desktop",
+  "checks": {
+    "default_ready": {
+      "names": [
+        "lbr_A1",
+        "lbr_A2",
+        "lbr_A3",
+        "lbr_A4",
+        "lbr_A5",
+        "lbr_A6",
+        "lbr_A7"
+      ],
+      "positions": [
+        -2.0299539460513684e-06,
+        0.34999997872298716,
+        -7.228014483236696e-21,
+        -0.9000133499862397,
+        -9.291154590534197e-07,
+        0.649990197854007,
+        1.489716155465432e-07
+      ],
+      "ee_xyz": [
+        0.6002628207206726,
+        -1.2640483646464418e-06,
+        0.8544737100601196
+      ],
+      "ee_xyzw": [
+        7.488946494049742e-07,
+        0.813416600227356,
+        -9.908765150612453e-07,
+        0.5816816091537476
+      ],
+      "tcp_xyz": [
+        0.6002628207206726,
+        -1.2640483646464418e-06,
+        0.8544737100601196
+      ],
+      "tcp_xyzw": [
+        7.488946494049742e-07,
+        0.813416600227356,
+        -9.908765150612453e-07,
+        0.5816816091537476
+      ],
+      "raw_age": 0.0009306099964305758,
+      "controller_age": 0.001324326000030851
+    },
+    "joint_motion": {
+      "target": 0.06,
+      "measured": 0.059981573313264175
+    },
+    "default_screenshot": "/home/siqin/ros2_workspaces/lbr_pybullet_ros/artifacts/workbench_final/default_joint_control.png",
+    "probe_reload": {
+      "previous_pid": 153728,
+      "current_pid": 154243,
+      "measured_tcp_offset_m": 0.17899993311911508
+    },
+    "probe_tcp_motion": {
+      "target": [
+        0.7797,
+        -0.0,
+        0.7966
+      ],
+      "measured": [
+        0.7794623970985413,
+        1.4864913282508496e-06,
+        0.7965701818466187
+      ]
+    },
+    "probe_screenshot": "/home/siqin/ros2_workspaces/lbr_pybullet_ros/artifacts/workbench_final/probe_cartesian_control.png",
+    "saved_profile_reopened": "/home/siqin/ros2_workspaces/lbr_pybullet_ros/artifacts/workbench_final/probe_project.json",
+    "six_axis_preview": {
+      "names": [
+        "lbr_A1",
+        "lbr_A2",
+        "lbr_A3",
+        "lbr_A4",
+        "lbr_A5",
+        "lbr_A6"
+      ],
+      "positions": [
+        1.6110241741761232e-07,
+        -2.3219033753859e-16,
+        7.058607893785836e-24,
+        2.191864469892012e-06,
+        -2.1746926197435899e-07,
+        1.227822323868704e-06
+      ],
+      "ee_xyz": [
+        -8.767456733949075e-07,
+        0.0,
+        1.1800000667572021
+      ],
+      "ee_xyzw": [
+        -3.2091176649373665e-07,
+        0.7071067690849304,
+        0.7071067690849304,
+        3.60768837026626e-07
+      ],
+      "tcp_xyz": [
+        -8.666560802339518e-07,
+        0.17900000512599945,
+        1.1799999475479126
+      ],
+      "tcp_xyzw": [
+        -3.2091176649373665e-07,
+        0.7071067690849304,
+        0.7071067690849304,
+        3.60768837026626e-07
+      ],
+      "raw_age": 0.08550816100250813,
+      "controller_age": 2.287814934999915
+    },
+    "preview_screenshot": "/home/siqin/ros2_workspaces/lbr_pybullet_ros/artifacts/workbench_final/imported_six_axis_preview.png"
+  },
+  "images_received": 53,
+  "elapsed_seconds": 14.524628532999486,
+  "ui_errors": [],
+  "owned_backend_stopped": true
+}

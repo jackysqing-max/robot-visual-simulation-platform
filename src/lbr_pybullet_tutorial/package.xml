@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="3">
   <name>lbr_pybullet_tutorial</name>
-  <version>0.1.0</version>
+  <version>0.2.0</version>
   <description>LBR ros2_control with PyBullet joint and Cartesian tutorials</description>
   <maintainer email="maintainer@example.com">Siqin</maintainer>
   <license>Apache-2.0</license>
@@ -9,6 +9,7 @@
   <exec_depend>lbr_pybullet_control</exec_depend>
   <exec_depend>rclpy</exec_depend>
   <exec_depend>python3-numpy</exec_depend>
+  <exec_depend>python3-pyqt5</exec_depend>
   <exec_depend>ament_index_python</exec_depend>
   <exec_depend>launch_ros</exec_depend>
   <exec_depend>controller_manager</exec_depend>

@@ -1,0 +1,7 @@
+Starting >>> lbr_pybullet_control
+Finished <<< lbr_pybullet_control [0.07s]
+Starting >>> lbr_pybullet_tutorial
+Finished <<< lbr_pybullet_tutorial [0.66s]
+
+Summary: 2 packages finished [0.97s]
+Build complete. Source /home/siqin/ros2_workspaces/lbr_pybullet_ros/install/local_setup.bash

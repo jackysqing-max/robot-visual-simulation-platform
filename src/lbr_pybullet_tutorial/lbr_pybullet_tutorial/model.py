@@ -10,6 +10,11 @@ FK or IK cannot teleport the independently running physics robot.
 from pathlib import Path
 import math
 import xml.etree.ElementTree as ET
+from functools import lru_cache
+import atexit
+import os
+import shutil
+import tempfile
 
 import numpy as np
 import pybullet as p
@@ -27,9 +32,38 @@ EE_LINK = 6
 BASE_FRAME = "lbr_link_0"
 
 
+@lru_cache(maxsize=8)
+def _project_spec(path, modified):
+    from .project_config import load_project, inspect_robot, build_model
+    project = load_project(path)
+    metadata = inspect_robot(project)
+    directory = Path(tempfile.mkdtemp(prefix='lbr_workbench_model_'))
+    atexit.register(shutil.rmtree, directory, ignore_errors=True)
+    return project, metadata, Path(build_model(project, directory))
+
+
+def project_spec():
+    path = os.environ.get('LBR_PYBULLET_PROJECT', '')
+    if not path:
+        return None
+    path = str(Path(path).expanduser().resolve())
+    return _project_spec(path, Path(path).stat().st_mtime_ns)
+
+
+def initial_positions():
+    spec = project_spec()
+    return list(spec[1].default_q) if spec else list(INITIAL_Q)
+
+
+def model_limits():
+    spec = project_spec()
+    return (list(spec[1].lower_limits), list(spec[1].upper_limits)) if spec else (LOWER_LIMITS, UPPER_LIMITS)
+
+
 def model_path():
     """Return the installed PyBullet iiwa URDF, with its packaged meshes."""
-    return Path(pybullet_data.getDataPath()) / "kuka_iiwa" / "model.urdf"
+    spec = project_spec()
+    return spec[2] if spec else Path(pybullet_data.getDataPath()) / "kuka_iiwa" / "model.urdf"
 
 
 def finite_vector(values, length, label):
@@ -45,10 +79,12 @@ def finite_vector(values, length, label):
 
 def validate_joints(q):
     """Validate seven joint positions in radians against the model's limits."""
-    result = finite_vector(q, 7, "joint positions")
-    for index, (value, lower, upper) in enumerate(zip(result, LOWER_LIMITS, UPPER_LIMITS)):
+    lower_limits, upper_limits = model_limits()
+    result = finite_vector(q, len(lower_limits), "joint positions")
+    for index, (value, lower, upper) in enumerate(zip(result, lower_limits, upper_limits)):
         if not lower <= value <= upper:
-            raise ValueError(f"{JOINT_NAMES[index]}={value:.6f} outside [{lower:.6f}, {upper:.6f}] rad")
+            name = JOINT_NAMES[index] if index < len(JOINT_NAMES) else f'Joint {index+1}'
+            raise ValueError(f"{name}={value:.6f} outside [{lower:.6f}, {upper:.6f}] rad")
     return result
 
 
@@ -86,23 +122,40 @@ def robot_description(hardware_parameters=None, initial_q=None):
     the installed meshes are made absolute so robot_state_publisher/RViz can
     resolve them without depending on the caller's current directory.
     """
-    initial_q = validate_joints(INITIAL_Q if initial_q is None else initial_q)
+    spec = project_spec()
+    if spec and not spec[1].control_compatible:
+        raise ValueError('This robot is available in preview mode: '+spec[1].control_reason)
+    initial_q = validate_joints(initial_positions() if initial_q is None else initial_q)
     source = model_path().read_text()
     parser = ET.XMLParser(target=ET.TreeBuilder(insert_comments=True))
     root = ET.fromstring(source, parser=parser)
     root.set("name", "lbr")
-    ET.SubElement(root, "link", {"name": "world"})
-    fixed = ET.SubElement(root, "joint", {"name": "world_to_lbr", "type": "fixed"})
-    ET.SubElement(fixed, "parent", {"link": "world"})
-    ET.SubElement(fixed, "child", {"link": "lbr_link_0"})
-    for index in range(8):
+    builtin = not spec or not spec[0].robot_urdf
+    for index in range(8) if builtin else []:
         old, new = f"lbr_iiwa_link_{index}", f"lbr_link_{index}"
         for element in root.iter():
             for attribute in ("name", "link"):
                 if element.get(attribute) == old:
                     element.set(attribute, new)
-    for index, joint_name in enumerate(JOINT_NAMES, start=1):
-        root.find(f"joint[@name='lbr_iiwa_joint_{index}']").set("name", joint_name)
+    native_joints = spec[1].joint_names if spec else [f'lbr_iiwa_joint_{i}' for i in range(1, 8)]
+    for native, joint_name in zip(native_joints, JOINT_NAMES):
+        root.find(f"joint[@name='{native}']").set("name", joint_name)
+    root_link = 'lbr_link_0' if builtin else spec[1].root_link
+    existing_links = {link.get('name') for link in root.findall('link')}
+    for reserved in ('world', 'lbr_link_0'):
+        if reserved in existing_links and root_link != reserved:
+            raise ValueError(f'Imported model has an ambiguous reserved base frame {reserved}; '
+                             'rename that non-root link before enabling LBR control')
+    if root_link != 'world':
+        ET.SubElement(root, 'link', {'name': 'world'})
+        fixed = ET.SubElement(root, 'joint', {'name': 'world_to_robot', 'type': 'fixed'})
+        ET.SubElement(fixed, 'parent', {'link': 'world'})
+        ET.SubElement(fixed, 'child', {'link': root_link})
+    if root_link != 'lbr_link_0':
+        ET.SubElement(root, 'link', {'name': 'lbr_link_0'})
+        fixed = ET.SubElement(root, 'joint', {'name': 'base_frame_alias', 'type': 'fixed'})
+        ET.SubElement(fixed, 'parent', {'link': root_link})
+        ET.SubElement(fixed, 'child', {'link': 'lbr_link_0'})
     for mesh in root.findall(".//mesh"):
         mesh.set("filename", str(model_path().parent / mesh.get("filename")))
     system = ET.SubElement(root, "ros2_control", {"name": "PyBulletSystem", "type": "system"})
@@ -113,7 +166,7 @@ def robot_description(hardware_parameters=None, initial_q=None):
     parameters.update(hardware_parameters or {})
     for name, value in parameters.items():
         ET.SubElement(hardware, "param", {"name": str(name)}).text = str(value)
-    for name, initial, lower, upper in zip(JOINT_NAMES, initial_q, LOWER_LIMITS, UPPER_LIMITS):
+    for name, initial, lower, upper in zip(JOINT_NAMES, initial_q, *model_limits()):
         joint = ET.SubElement(system, "joint", {"name": name})
         command = ET.SubElement(joint, "command_interface", {"name": "position"})
         ET.SubElement(command, "param", {"name": "min"}).text = str(lower)
@@ -135,8 +188,24 @@ class Kinematics:
     def __init__(self):
         self.client = p.connect(p.DIRECT)
         self.robot = p.loadURDF(str(model_path()), useFixedBase=True, physicsClientId=self.client)
-        self.lower = list(LOWER_LIMITS)
-        self.upper = list(UPPER_LIMITS)
+        self.lower, self.upper = map(list, model_limits())
+        bullet_indices = [i for i in range(p.getNumJoints(self.robot, physicsClientId=self.client))
+                              if p.getJointInfo(self.robot, i, physicsClientId=self.client)[2]
+                              in (p.JOINT_REVOLUTE, p.JOINT_PRISMATIC)]
+        spec = project_spec()
+        native = {p.getJointInfo(self.robot, i, physicsClientId=self.client)[1].decode(): i
+                  for i in bullet_indices}
+        self.joint_indices = [native[name] for name in spec[1].joint_names] if spec else bullet_indices
+        self.dof_order = [bullet_indices.index(i) for i in self.joint_indices]
+        links = {p.getJointInfo(self.robot, i, physicsClientId=self.client)[12].decode(): i
+                 for i in range(p.getNumJoints(self.robot, physicsClientId=self.client))}
+        self.ee_link = links.get('workbench_tcp', EE_LINK)
+
+    def _bullet_order(self, values):
+        result = [0.0]*len(values)
+        for value, index in zip(values, self.dof_order):
+            result[index] = value
+        return result
 
     def close(self):
         if self.client is not None:
@@ -152,12 +221,12 @@ class Kinematics:
     def _set_q(self, q):
         if self.client is None:
             raise RuntimeError("kinematics client is closed")
-        for index, value in enumerate(q):
+        for index, value in zip(self.joint_indices, q):
             p.resetJointState(self.robot, index, value, physicsClientId=self.client)
 
     def fk(self, q):
         self._set_q(validate_joints(q))
-        state = p.getLinkState(self.robot, EE_LINK, computeForwardKinematics=True,
+        state = p.getLinkState(self.robot, self.ee_link, computeForwardKinematics=True,
                                physicsClientId=self.client)
         # 4/5 are URDF link-frame coordinates; 0/1 are the inertial COM frame.
         return list(state[4]), list(state[5])
@@ -177,13 +246,14 @@ class Kinematics:
             raise ValueError("IK tolerances must be positive finite numbers")
         self._set_q(seed)
         result = p.calculateInverseKinematics(
-            self.robot, EE_LINK, target.tolist(), quaternion,
-            lowerLimits=self.lower, upperLimits=self.upper,
-            jointRanges=[upper - lower for lower, upper in zip(self.lower, self.upper)],
-            restPoses=seed, maxNumIterations=200, residualThreshold=1e-7,
+            self.robot, self.ee_link, target.tolist(), quaternion,
+            lowerLimits=self._bullet_order(self.lower), upperLimits=self._bullet_order(self.upper),
+            jointRanges=self._bullet_order([upper-lower for lower, upper in zip(self.lower, self.upper)]),
+            restPoses=self._bullet_order(seed), maxNumIterations=200, residualThreshold=1e-7,
             physicsClientId=self.client,
         )
-        q = np.clip(np.asarray(result[:7]), self.lower, self.upper)
+        n = len(self.joint_indices)
+        q = np.clip(np.asarray([result[i] for i in self.dof_order]), self.lower, self.upper)
         position_residual, rotation_residual = float("inf"), float("inf")
         for _ in range(300):
             actual_position, actual_quaternion = self.fk(q)
@@ -194,10 +264,10 @@ class Kinematics:
             if position_residual <= position_tolerance and rotation_residual <= orientation_tolerance:
                 return validate_joints(q)
             linear, angular = p.calculateJacobian(
-                self.robot, EE_LINK, [0.0, 0.0, 0.0], q.tolist(), [0.0] * 7,
-                [0.0] * 7, physicsClientId=self.client,
+                self.robot, self.ee_link, [0.0, 0.0, 0.0], self._bullet_order(q), [0.0] * n,
+                [0.0] * n, physicsClientId=self.client,
             )
-            jacobian = np.vstack((linear, angular))
+            jacobian = np.vstack((linear, angular))[:, self.dof_order]
             error = np.concatenate((position_error, rotation_error))
             damping = 0.01
             delta = jacobian.T @ np.linalg.solve(jacobian @ jacobian.T + damping**2 * np.eye(6), error)

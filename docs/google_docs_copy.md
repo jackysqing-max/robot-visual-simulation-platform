@@ -4,7 +4,7 @@ LBR Stack × PyBullet 独立运控项目与学生实施说明
 
 建立可独立构建、调试和可视化运行的 ROS 2 运控仓库 lbr_pybullet_ros。其他节点发送关节位置、末端位姿或笛卡尔路径，本模块负责转换、执行并反馈结果，作为 llm_ros、sam3_ros 与后续器械分拣任务之间的运动执行层。
 
-本地仓库：/home/siqin/ros2_workspaces/lbr_pybullet_ros。仓库名称独立，ROS 包名保留 lbr_pybullet_control、lbr_pybullet_tutorial，接口保留 /lbr_tutorial，方便与原教程兼容。当前交付本地源码仓库及压缩包；尚未发布远程仓库。
+本地仓库：/home/siqin/ros2_workspaces/lbr_pybullet_ros。仓库名称独立，ROS 包名保留 lbr_pybullet_control、lbr_pybullet_tutorial，接口保留 /lbr_tutorial，方便与原教程兼容。GitHub 独立仓库：https://github.com/jackysqing-max/robot-visual-simulation-platform 。本地源码仓库及压缩包继续保留。
 
 2. 实际控制链路
 

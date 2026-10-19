@@ -10,7 +10,7 @@ Use the existing ROS 2 Humble environment and repository setup instructions in [
 
 ```bash
 sudo apt-get install python3-pyqt5
-cd /home/siqin/ros2_workspaces/lbr_pybullet_ros
+cd /path/to/robot-visual-simulation-platform
 ./scripts/setup.sh
 ./scripts/run_workbench.sh --start
 ```

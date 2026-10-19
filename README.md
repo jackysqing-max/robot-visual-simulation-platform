@@ -1,130 +1,133 @@
-# lbr_pybullet_ros
+# Robot Visual Simulation Platform
 
-可独立构建、调试和可视化运行的 ROS 2 Humble 机械臂运控仓库。接收关节目标、末端位姿或笛卡尔路径，使用 LBR Stack 配置的官方 `joint_trajectory_controller`（JTC）执行轨迹，通过 `ros2_control` 驱动 PyBullet 七轴 iiwa，并反馈实际物理状态。
+**Robot Workbench** is an English desktop application for robot model import, interchangeable instruments, TCP configuration, ROS 2 motion control, and live PyBullet visualization.
 
-默认只依赖本仓库、系统 ROS 2 和 Python 依赖。`llm_ros`、`sam3_ros` 及应用规划器通过 ROS 节点通信接入。ROS 包名保留 `lbr_pybullet_control`、`lbr_pybullet_tutorial`，原有 topic 保持兼容。
+[中文说明](README.zh-CN.md) · [Workbench guide](docs/workbench.md) · [ROS interfaces](docs/interfaces.md) · [Validation reports](docs/validation.md)
 
-[Google 文档可粘贴正文](docs/google_docs_copy.txt) · [DOCX 版本](docs/google_docs_copy.docx) · [快速开始](docs/quickstart.md) · [接口](docs/interfaces.md) · [学生计划](docs/student_plan.md) · [验证记录](docs/validation.md)
+![Robot Workbench with a probe and live Robot Monitor](docs/evidence/workbench/probe.png)
 
-## 英文桌面 UI
+## Features
 
-```bash
-sudo apt-get install python3-pyqt5
-./scripts/setup.sh
-./scripts/run_workbench.sh --start
-```
+- Import robot URDFs and rigid end effectors from URDF, STL, or OBJ files.
+- Set the flange, instrument scale, mounting transform, and tool centre point; save and reopen JSON projects.
+- View the actual simulated robot through an embedded camera with orbit and zoom controls.
+- Execute joint goals and Cartesian TCP trajectories through the LBR-configured ROS 2 joint trajectory controller.
+- Observe measured positions, velocities, efforts, and tracking error in a dockable Robot Monitor.
+- Optionally embed the original C++ Qt6 Robot Monitor as a native child window on X11.
+- Run simulation and control as independent ROS nodes and connect other application modules through standard ROS interfaces.
 
-界面支持导入机器人 URDF、导入末端 URDF/STL/OBJ、切换探针和固定夹爪，设置安装偏移与 TCP，保存/打开项目，并通过 ROS 2 执行关节和 TCP 运动。中心画面来自实际仿真；底部 Robot Monitor 显示关节位置、速度、力矩及跟踪误差，可停靠或浮动。`View → Legacy Robot Monitor` 可嵌入原有 Qt6 监控窗口。
+Trajectory control currently supports compatible seven-axis robots with bounded revolute joints in one serial chain. Other supported models are available in **Preview only** mode. Instruments are rigid attachments; the gripper example has no finger actuator. Hardware execution and collision-aware motion planning are outside the current implementation.
 
-兼容的七轴模型使用现有 LBR 控制链路；其他模型提供明确标注的预览模式。末端为刚性装配，夹爪手指驱动不在本版范围内。
+## Install
 
-[英文 UI 操作指南](docs/workbench.md) · [探针示例项目](examples/probe_project.json) · [OBJ 器械示例](examples/scalpel_project.json)
-
-![Robot Workbench](docs/evidence/workbench/probe.png)
-
-## 安装与可视化
-
-在已安装 ROS 2 Humble 的 Ubuntu 22.04 上：
+The tested baseline is Ubuntu 22.04, ROS 2 Humble, and system Python 3.10. Install ROS 2 Humble first, then:
 
 ```bash
-sudo apt-get install ros-humble-ros2-control ros-humble-ros2-controllers \
-  ros-humble-robot-state-publisher python3-colcon-common-extensions \
-  python3-numpy python3-pip python3-pytest python3-pyqt5
+git clone https://github.com/jackysqing-max/robot-visual-simulation-platform.git
+cd robot-visual-simulation-platform
+
+sudo apt-get update
+sudo apt-get install -y build-essential python3-colcon-common-extensions \
+  python3-numpy python3-pip python3-pyqt5 python3-pytest \
+  ros-humble-ros2-control ros-humble-ros2-controllers \
+  ros-humble-robot-state-publisher
 /usr/bin/python3 -m pip install --user -r requirements.txt
 ./scripts/setup.sh
 ```
 
-依次运行两个可视化 demo；每次自动启动系统，执行并保存报告后关闭：
+Use a ROS-compatible system Python environment. The standalone simulator and built-in monitor require no external project checkout, LLM service, or FRI SDK. The original Qt6 monitor is an optional integration with its own installed workspace.
+
+## Open the desktop platform
 
 ```bash
-./scripts/run_demo.sh joint gui:=true
-./scripts/run_demo.sh cartesian gui:=true
+./scripts/run_workbench.sh --start
 ```
 
-`gui:=false` 用于无窗口测试。GUI 显示机器人与绿色实测末端轨迹，可调整视角观察。报告和日志在 `artifacts/`。
-
-持续运行完整系统，允许其他节点发送目标：
+Open a supplied project:
 
 ```bash
-./scripts/run_demo.sh bringup gui:=true
+./scripts/run_workbench.sh --project examples/probe_project.json --start
+# Alternatives: examples/gripper_project.json or examples/scalpel_project.json
 ```
 
-第二终端进入仓库后设置环境，运行 demo 或自己的应用节点：
+Run one platform instance per ROS domain. The default domain is 87; set another domain when needed:
 
 ```bash
-source /opt/ros/humble/setup.bash
-source install/local_setup.bash
-export ROS_DOMAIN_ID=87
-ros2 run lbr_pybullet_tutorial demo --mode joint
+ROS_DOMAIN_ID=88 ./scripts/run_workbench.sh --start
 ```
 
-所有通信节点使用相同 domain；脚本默认为 87。
+Import the robot and instrument in the left panel, configure the mount and TCP, and select **Apply & Reload**. Use the joint or Cartesian TCP controls and observe the monitor. Project edits are staged until applied. See the [English workbench guide](docs/workbench.md) for units, compatibility rules, and the original-monitor integration.
 
-## 拆分节点调试
-
-终端 A 只运行 PyBullet 物理和可视化节点：
+## Run without the desktop platform
 
 ```bash
+./scripts/run_demo.sh joint
+./scripts/run_demo.sh cartesian
+```
+
+Add `gui:=true` to open PyBullet's own visualizer. To separate the simulator and controller, run these in two terminals using the same ROS domain:
+
+```bash
+# Terminal A
 ./scripts/run_demo.sh sim gui:=true
-```
 
-终端 B 启动控制器与任务接收节点，连接已经运行的仿真：
-
-```bash
+# Terminal B
 ./scripts/run_demo.sh bringup sim_backend:=external
 ```
 
-两组进程可以分别调试和重启。仿真持续发布 `/iiwa7/joint_states`，接收 `/iiwa7/joint_desired`。每台仿真只启动一个实例，指令由一条运控链路写入。上层目标 topic 由任务接收节点提供。
+## ROS integration
 
-兼容原来的 `pybullet_ros2_sim` 时显式选择旧后端：
+| Interface | Type | Purpose |
+| --- | --- | --- |
+| `/lbr_tutorial/joint_goal` | `sensor_msgs/msg/JointState` | Seven joint position targets, radians |
+| `/lbr_tutorial/pose_goal` | `geometry_msgs/msg/PoseStamped` | Configured TCP target for workbench projects |
+| `/lbr_tutorial/cartesian_path` | `nav_msgs/msg/Path` | Cartesian TCP path |
+| `/lbr_tutorial/status` | `std_msgs/msg/String` | JSON task events and request IDs |
+| `/lbr_tutorial/cancel` | `std_srvs/srv/Trigger` | Cancel the active task |
+| `/lbr/joint_states` | `sensor_msgs/msg/JointState` | Measured joint feedback |
+| `/lbr/ee_pose` | `geometry_msgs/msg/PoseStamped` | Measured flange pose |
+| `/lbr/tcp_pose` | `geometry_msgs/msg/PoseStamped` | Measured configured TCP pose |
+| `/lbr/sim/config` | `std_msgs/msg/String` | Applied model and instrument configuration |
+| `/lbr/sim/camera/image` | `sensor_msgs/msg/Image` | Live simulation camera |
 
-```bash
-export LBR_TUTORIAL_LEGACY_WS=/home/siqin/ros2_workspaces/humble/ros2_pybullet_ws
-./scripts/run_demo.sh joint sim_backend:=existing
-```
+Source `install/local_setup.bash` in participating ROS terminals and use the same `ROS_DOMAIN_ID`. The retained package names are `lbr_pybullet_control` and `lbr_pybullet_tutorial`. See [interface details](docs/interfaces.md) and the [workbench guide](docs/workbench.md) for frame conventions and task sequencing.
 
-`existing` 启动旧仿真；`external` 连接已运行的兼容仿真。默认模式不会自动 source 其他工作区。
-
-## ROS 接口
-
-| 接口 | 类型 | 用途 |
-|---|---|---|
-| `/lbr_tutorial/joint_goal` | `sensor_msgs/msg/JointState` | 七轴位置目标，rad |
-| `/lbr_tutorial/pose_goal` | `geometry_msgs/msg/PoseStamped` | 单个末端位姿，m |
-| `/lbr_tutorial/cartesian_path` | `nav_msgs/msg/Path` | 末端路径 |
-| `/lbr_tutorial/status` | `std_msgs/msg/String` | JSON 任务状态与 request_id |
-| `/lbr_tutorial/cancel` | `std_srvs/srv/Trigger` | 取消当前任务 |
-| `/lbr/joint_states` | `sensor_msgs/msg/JointState` | 实测关节反馈 |
-| `/lbr/ee_pose` | `geometry_msgs/msg/PoseStamped` | 默认仿真实测末端位姿 |
-| `/lbr/joint_trajectory_controller/follow_joint_trajectory` | `control_msgs/action/FollowJointTrajectory` | 精确指定多点时间的标准 action |
-
-一次执行一个目标。应用等待最终结果后再提交下一目标。末端 frame 为 `world` 或 `lbr_link_0`，目标 stamp 为零，四元数为 xyzw。相机坐标与工具 TCP 由应用层转换。完整消息示例见 [Google 文档正文](docs/google_docs_copy.md)。
-
-## 实现与目录
+## Architecture
 
 ```text
-ROS 2 目标 → 关节轨迹 / 笛卡尔采样与数值 IK
-  → FollowJointTrajectory → 官方 JTC → 自定义 SystemInterface
-  → PyBullet 电机伺服与物理步进 → 实测关节反馈
+Robot / instrument project
+  → assembled URDF and explicit TCP
+  → PyBullet physics + measured feedback + camera
 
-src/lbr_pybullet_control/     C++ ros2_control 硬件插件
-src/lbr_pybullet_tutorial/    仿真、运动学、目标接收、demo 和 launch
-scripts/                     构建、启动、验证与打包
-third_party/lbr_stack/       固定版本的上游客户端、许可与来源
+ROS goals / desktop controls
+  → joint trajectory or Cartesian sampling + numerical IK
+  → FollowJointTrajectory → official joint_trajectory_controller
+  → ros2_control SystemInterface → PyBullet position servo
 ```
 
-上游 LBR Stack 固定为 `52f816bd59cbd2390efc890cca0ad61389e4ccb3`。复用其控制器配置和原始客户端；JTC 来自 ROS 官方 `ros2_controllers`，数值 IK 由本项目实现。默认模型为 `pybullet_data/kuka_iiwa/model.urdf`，末端为 link7，没有附加夹爪 TCP，也未连接真实机器人。
+The project reuses the LBR Stack controller configuration and original trajectory client at commit `52f816bd59cbd2390efc890cca0ad61389e4ccb3`. The controller implementation comes from ROS `ros2_controllers`; the TCP sampling and numerical IK are implemented here. Imported models keep their original geometry and use an explicit joint-name mapping.
 
-## 验证与源码导出
+## Validation
 
 ```bash
 ./scripts/test.sh
 source install/local_setup.bash
-/usr/bin/python3 scripts/feedback_fault_test.py
-/usr/bin/python3 scripts/gui_smoke_test.py
-/usr/bin/python3 scripts/package_source.py
+/usr/bin/python3 scripts/workbench_smoke_test.py --output artifacts/workbench_check
 ```
 
-测试范围、真实 GUI 截图与独立节点联调结果见 [验证记录](docs/validation.md)。源码 ZIP 排除本机的 build/install/log 和 Git 内部文件，包含文档及冻结证据。
+The recorded release includes **82 passing unit tests**, a real desktop test covering joint motion, probe replacement, TCP motion, project save/open and six-axis preview, and actual X11 embedding of the original Robot Monitor. Reports, screenshots, and failure records are retained in [validation documentation](docs/validation.md). These results describe the tested simulation configurations.
 
-抓取、避障、夹爪与真机迁移按 [学生计划](docs/student_plan.md) 后续接入。许可见 [LICENSE](LICENSE)，上游来源见 [NOTICE](NOTICE)。
+## Repository layout
+
+```text
+src/lbr_pybullet_control/    C++ ros2_control hardware adapter
+src/lbr_pybullet_tutorial/   Simulator, FK/IK, motion node, desktop UI and launches
+examples/                   Probe, gripper and OBJ instrument projects
+scripts/                    Build, run, test and export tools
+docs/                       Guides and frozen validation evidence
+third_party/lbr_stack/      Pinned upstream client, license and provenance
+```
+
+## License
+
+Original implementation: [Apache-2.0](LICENSE). See [NOTICE](NOTICE) and [upstream provenance](third_party/lbr_stack/provenance.json) for retained LBR Stack files. The PyBullet robot model is loaded from the installed dependency; its BSD notice is preserved in generated descriptions.

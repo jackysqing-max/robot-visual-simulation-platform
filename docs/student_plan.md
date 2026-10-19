@@ -1,61 +1,63 @@
-# 学生实施顺序与应用接入计划
+# Student implementation and application integration plan
 
-本教程先完成运控基础链路，让学生能独立发送关节目标和末端路径，再接入 `medical_instrument_sorting_student_guide.docx` 的应用阶段。本文中的后续交付项是实施计划，只有已有代码与运行记录支持的项才能标记为完成。
+The tutorial establishes the motion-control chain so students can independently send joint goals and end-effector paths before progressing to the medical instrument sorting application. Later deliverables below are planned work. Mark an item complete only when code and reproducible execution records support it.
 
-## 教程 T0–T5
+Repository: https://github.com/jackysqing-max/robot-visual-simulation-platform
 
-| 步骤 | 实施内容 | 完成时应保存的证据 |
-|---|---|---|
-| T0 环境 | 构建两个 ROS 包，启动默认 PyBullet 与控制器 | setup 输出、包列表、active 控制器列表 |
-| T1 关节控制 | 运行 joint demo，尝试一个手动 JointState 目标 | 输入、action 结果、实测关节误差、JSON 报告 |
-| T2 末端运动学 | 解释基座、link7、四元数和 IK，运行 Cartesian demo | 目标路径、实测路径、位置与姿态误差 |
-| T3 ROS 接口 | 通过 topic 发送目标，关联状态 ID，演示 busy 与取消 | topic 连接图、状态日志、拒绝与取消记录 |
-| T4 现有仿真 | 用 `sim_backend:=existing` 连接现有 PyBullet 实现 | 与默认后端分别记录两个 demo 的结果 |
-| T5 应用适配 | 写应用层适配器，把经校验的抓取/放置姿态发送到运控接口 | 接口字段、frame/TCP 转换、一次可复现任务序列 |
+## Tutorial steps T0 to T5
 
-T0 → T1 → T2 → T3 → T4 依次验收。T5 在下述 M2/M3 的坐标和抓取输出建立之后开展。每个步骤只推进到一个可观察的新能力；上一项未通过时先修正，再接入更多组件。
+| Step | Work | Evidence to retain |
+| --- | --- | --- |
+| T0 Environment | Build both ROS packages; start the default PyBullet simulator and controllers | Setup output, package list, active controller list |
+| T1 Joint control | Run the joint demo and one manual JointState goal | Input, action result, measured joint error, JSON report |
+| T2 End-effector kinematics | Explain the base, link7, quaternions, and IK; run the Cartesian demo | Target and measured paths, position and orientation errors |
+| T3 ROS interfaces | Publish goals, correlate status IDs, demonstrate busy rejection and cancellation | Topic graph, status log, rejection and cancellation records |
+| T4 Existing simulation | Connect the existing PyBullet implementation using `sim_backend:=existing` | Separate joint and Cartesian results for both backends |
+| T5 Application adapter | Send validated grasp and placement poses to the motion interface | Field definitions, frame/TCP conversion, reproducible task sequence |
 
-## 与 M1–M5 的对应关系
+Review T0 through T4 in order. Begin T5 after M2/M3 establish coordinate and grasp outputs. Each step should add one observable capability. Fix a failed step before connecting more components.
 
-### M1：指令到分割
+## Application milestones M1 to M5
 
-先连接 `/llm/request_json`、`/llm/response_json` 和 SAM3。应用解析模型返回文本，并验证动作、目标和放置位置；HTTP 成功并不等于任务有效。按 `request_id` 对应 LLM 请求与结果。
+### M1 Instruction to segmentation
 
-SAM3 没有任务 ID，应用应串行处理，确认 active prompt 后再接受新采集 RGB 对应的 mask。使用图像 header 关联源图；不能靠消息先后顺序把旧 mask 当成新结果。该阶段保持机械臂静止。
+Connect `/llm/request_json`, `/llm/response_json`, and SAM3. Parse the model's returned text and validate the action, target, and destination. HTTP success alone does not establish a valid task. Match LLM requests and results by `request_id`.
 
-交付：指令到 mask 的应用节点、任务 JSON schema、成功/拒绝/异常日志与逐条结果表。教程运控无需接收自然语言原文。
+SAM3 has no task ID in the integration described here. Process requests serially, confirm the active prompt, and accept only masks associated with newly captured RGB images. Correlate source images through their headers; message order alone cannot distinguish an old mask from a new result. Keep the robot stationary during this stage.
 
-### M2：RGB-D 与基座坐标
+Deliverables: an instruction-to-mask application node, task JSON schema, success/rejection/error logs, and per-case results. The tutorial motion node does not need raw natural-language instructions.
 
-按 mask 的源 RGB 时间匹配已对齐 depth 和 CameraInfo，过滤无效深度，得到相机系三维点。标定相机到机器人基座的变换，使用对应采集时间的 TF，记录基座到工具 TCP 的定义，并用独立测量点验证。
+### M2 RGB-D and base coordinates
 
-交付：配对帧、点云、深度有效率、时间差、TF 树、标定值与独立误差表。向运控接口发送之前，应用必须把期望 TCP 姿态转换成当前模型 link7 的目标姿态。
+Match aligned depth and CameraInfo to the mask's source RGB acquisition time. Filter invalid depth and recover camera-frame 3D points. Calibrate the camera-to-base transform, use TF at the corresponding capture time, document the base-to-tool TCP definition, and validate with independent measurement points.
 
-### M3：抓取生成与可行性
+Deliverables: paired frames, point clouds, valid-depth rate, time offsets, TF tree, calibration values, and independent error measurements. For the default tutorial model, convert a desired tool TCP pose to the model's link7 pose before sending it. Configured workbench projects instead accept the configured TCP directly; follow [workbench frame conventions](workbench.md).
 
-从可抓手柄区域生成候选，保留 request/capture 来源、frame、位置、四元数、夹爪开度与接近方向。对候选和整个接近/搬运路径执行工作空间、IK、关节限制、碰撞和夹爪开度检查，再选择可执行目标。
+### M3 Grasp generation and feasibility
 
-本教程的数值 IK 可以作为学习基线；完整抓取仍需碰撞模型、TCP、夹爪和物体几何。不可把“目标有 IK 解”当成“抓取已验证”。
+Generate candidates from graspable handle regions. Retain request/capture provenance, frame, position, quaternion, gripper width, and approach direction. Check workspace, IK, joint limits, collisions, and gripper opening for the candidate and the full approach/transfer path before selecting a goal.
 
-交付：候选与拒绝理由、完整约束、接近姿态可视化、逐场景结果。通过后再开展 T5。
+The tutorial's numerical IK is a learning baseline. A complete grasp also needs collision models, TCP, gripper geometry, and object geometry. An IK solution alone does not validate a grasp.
 
-### M4：执行与结果验证
+Deliverables: candidates with rejection reasons, complete constraints, approach-pose visualization, and per-scene results. Start T5 after this review passes.
 
-应用状态机依次执行：获取新场景 → 验证任务 → 预抓取 → 接近 → 夹爪闭合 → 抬升 → 搬运 → 释放 → 验证。机械臂的运动段调用本教程的 pose/path 或标准轨迹 action，夹爪由独立接口控制。
+### M4 Execution and result verification
 
-应用记录教学节点分配的运控 request ID 与上层任务 ID 的对应关系，只在匹配的最终状态成功后推进下一步。失败、busy 或取消时保持明确状态，不能跳到释放或任务完成。抬升后和放置后都需要物理结果判定。
+Implement a state machine: acquire a fresh scene, validate the task, move to pregrasp, approach, close the gripper, lift, transfer, release, and verify. Arm segments call the tutorial pose/path interface or standard trajectory action. A separate interface controls the gripper.
 
-交付：状态机、夹爪与器械模型、接触仿真或真机证据、抓取与放置验证。当前只有机械臂的运控 demo，不代表这一阶段已完成。
+Record the mapping between node-assigned motion request IDs and application task IDs. Advance only after a matching final success event. Keep explicit failure, busy, and cancellation states; do not skip to release or task completion. Verify the physical result after lifting and after placement.
 
-### M5：固定评估与复现
+Deliverables: state machine, gripper and instrument models, contact-simulation or real-robot evidence, and grasp/placement verification. The current arm-motion demos do not complete this milestone.
 
-冻结配置，使用未用于调参的场景和指令，记录首次尝试与后续恢复。分别统计目标选择、抓取、完整任务、控制拒绝、三维误差和延迟。保留每次失败原因，不用重复试到成功覆盖原结果。
+### M5 Fixed evaluation and reproduction
 
-交付：固定任务表、版本配置、逐条原始结果、汇总统计、代表性失败与连续视频。原学生文档中的试验数量与通过率属于建议教学目标；教师确认后才作为本地验收方案，不能当成当前实测结果。
+Freeze the configuration and evaluate scenes and instructions that were not used for tuning. Record first attempts and subsequent recovery separately. Measure target selection, grasp success, complete-task success, control rejections, 3D error, and latency. Preserve each failure instead of overwriting it with a later successful retry.
 
-## 应用适配器建议
+Deliverables: fixed task list, versioned configuration, raw per-case results, summary statistics, representative failures, and continuous video. Trial counts and pass rates in the accompanying student guide are proposed teaching targets. Use them as local acceptance criteria only after instructor agreement; they are not current measured results.
 
-保持 `llm_ros`、`sam3_ros` 与本教程各自的职责，新增应用层包执行任务关联与状态机。应用输入可包含：
+## Application adapter
+
+Keep the responsibilities of `llm_ros`, `sam3_ros`, and the motion tutorial separate. Add an application package for task correlation and the state machine. A proposed input is:
 
 ```json
 {
@@ -66,21 +68,19 @@ SAM3 没有任务 ID，应用应串行处理，确认 active prompt 后再接受
 }
 ```
 
-这是一种待实现的应用 schema，不是现有 LLM topic 或运控 topic 的消息定义。应用把通过验证的目标发送到 `/sam3/prompt`，在 M2/M3 得到可靠的基座系姿态后，才向 `/lbr_tutorial/pose_goal` 或 `/lbr_tutorial/cartesian_path` 发送机械臂目标。
+This is an application schema to implement, not an existing LLM or motion-topic message definition. Send validated prompts to `/sam3/prompt`. Submit arm goals to `/lbr_tutorial/pose_goal` or `/lbr_tutorial/cartesian_path` only after M2/M3 provide reliable poses in the required base frame.
 
-可用下表记录应用与运控任务的关联：
-
-| 上层字段 | 保存内容 |
-|---|---|
-| `task_id` | 本次指令与完整任务 ID |
-| `capture_id` | RGB、mask、depth 的共同来源 |
-| `candidate_id` | 被选择的抓取候选 |
-| `motion_request_id` | 教学节点返回的运控请求 ID |
+| Application field | Record |
+| --- | --- |
+| `task_id` | Instruction and complete task ID |
+| `capture_id` | Shared provenance of RGB, mask, and depth |
+| `candidate_id` | Selected grasp candidate |
+| `motion_request_id` | Request ID returned by the tutorial motion node |
 | `stage` | pregrasp / approach / lift / transfer / release |
-| `outcome` | 物理验证结果与失败原因 |
+| `outcome` | Physical verification result and failure reason |
 
-## 每次评审记录
+## Review records
 
-每个任务填写：任务编号、目标、负责人、复核人、约定评审日期、所需输入、实施步骤、验收条件、代码和证据链接、状态。状态使用 Planned、In progress、Ready for review、Completed；有可复现证据并经复核后再标记 Completed。
+For each task, record its ID, objective, owner, reviewer, agreed review date, inputs, implementation steps, acceptance criteria, code/evidence links, and status. Use Planned, In progress, Ready for review, or Completed. Mark Completed after reproducible evidence has been reviewed.
 
-首个运控评审建议只验收 T0/T1；第二个验收 T2/T3；第三个比较 T4 两种后端并确认应用接口。应用阶段继续按 M1 → M2 → M3 → M4 → M5 推进，具体日期按相机、夹爪与实验条件安排。
+The first motion review should cover T0/T1; the second T2/T3; the third should compare T4 backends and confirm the application interface. Continue application work through M1, M2, M3, M4, and M5 in order. Set dates according to camera, gripper, and experiment availability.

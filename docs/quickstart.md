@@ -1,17 +1,16 @@
-# 快速开始
+# Quick start
 
-## 环境与构建
+## Environment and build
 
-目标环境为 Ubuntu 22.04、系统 Python 3、ROS 2 Humble。PyBullet 和 ROS Python 节点需要运行在能够导入 `rclpy` 的同一个 Python 环境。首次执行：
+The target environment is Ubuntu 22.04, system Python 3, and ROS 2 Humble. PyBullet and ROS Python nodes must use the same Python environment with access to `rclpy`. From the repository root, run:
 
 ```bash
-cd /home/siqin/ros2_workspaces/lbr_pybullet_ros
 ./scripts/setup.sh
 ```
 
-脚本负责检查依赖并构建本工程。缺少系统依赖时，按脚本输出安装，再重新运行。不要在缺少系统 ROS 库的任意 Conda 环境中启动节点。
+The script checks dependencies and builds the project. Install any missing system dependencies listed in its output, then rerun it. Use a Python environment that can load the system ROS libraries.
 
-新环境可先安装所需 ROS 控制组件，再安装 PyBullet：
+On a new machine, install ROS 2 Humble first, then the required ROS control components and PyBullet:
 
 ```bash
 sudo apt-get install ros-humble-ros2-control ros-humble-ros2-controllers \
@@ -21,38 +20,36 @@ sudo apt-get install ros-humble-ros2-control ros-humble-ros2-controllers \
 ./scripts/setup.sh
 ```
 
-## 最短运行路径
+## First run
 
-先运行关节 demo，成功退出后再运行笛卡尔 demo：
+Run the joint demo, wait for successful completion, then run the Cartesian demo:
 
 ```bash
 ./scripts/run_demo.sh joint
 ./scripts/run_demo.sh cartesian
 ```
 
-需要图形窗口时，在有桌面显示的终端运行：
+For a graphical window, use a terminal with an available desktop display:
 
 ```bash
 ./scripts/run_demo.sh joint gui:=true
 ```
 
-`joint` demo 发送七个关节的目标位置，等待控制器完成并检查物理反馈；`cartesian` demo 根据当前末端位姿生成小范围轨迹，经逐点 IK 后发送给同一个轨迹 action。关节 demo 验证输入到伺服通路，笛卡尔 demo 额外验证运动学和末端轨迹。
+The `joint` demo sends seven joint position targets, waits for controller completion, and checks physical feedback. The `cartesian` demo generates a small path from the current end-effector pose, solves IK at each sample, and submits it to the same trajectory action. The joint demo checks the input-to-servo chain; the Cartesian demo also checks kinematics and the end-effector path.
 
-脚本保存 `artifacts/joint_report.json`、`artifacts/cartesian_report.json` 以及对应的 `*_launch.log`。demo 完成后脚本会停止自己启动的 launch。若已经有系统在运行，使用下面的“分终端运行”方法，避免重复启动。
+The script saves `artifacts/joint_report.json`, `artifacts/cartesian_report.json`, and corresponding `*_launch.log` files. Each demo stops the launch process it started. If the system is already running, use the separate-terminal procedure below to avoid duplicate instances.
 
-## 分终端运行与观察
+## Run and observe in separate terminals
 
-先只启动系统：
+In terminal A, open the repository root and start the system:
 
 ```bash
-cd /home/siqin/ros2_workspaces/lbr_pybullet_ros
 ./scripts/run_demo.sh bringup gui:=true
 ```
 
-另一个终端设置相同环境：
+In terminal B, open the same repository root and set up the environment:
 
 ```bash
-cd /home/siqin/ros2_workspaces/lbr_pybullet_ros
 source /opt/ros/humble/setup.bash
 source install/local_setup.bash
 export ROS_DOMAIN_ID=87
@@ -60,16 +57,16 @@ ros2 control list_controllers -c /lbr/controller_manager
 ros2 action list -t
 ```
 
-应看到处于 `active` 状态的 `joint_state_broadcaster` 与 `joint_trajectory_controller`，以及 `/lbr/joint_trajectory_controller/follow_joint_trajectory` action。之后运行：
+Both `joint_state_broadcaster` and `joint_trajectory_controller` should be `active`. The action list should contain `/lbr/joint_trajectory_controller/follow_joint_trajectory`. Run the demos one at a time:
 
 ```bash
 ros2 run lbr_pybullet_tutorial demo --mode joint --timeout 60 --report /tmp/lbr_joint_report.json
 ros2 run lbr_pybullet_tutorial demo --mode cartesian --timeout 60 --report /tmp/lbr_cartesian_report.json
 ```
 
-这些命令仍需依次完成。`--report` 将本次结果写入指定 JSON 文件，便于保存与比较；成功条件和可解释范围见 [验证文档](validation.md)。
+`--report` writes the current result to a JSON file for comparison. See [validation](validation.md) for success criteria and measurement interpretation.
 
-另开一个完成相同 source 和 domain 设置的终端观察：
+Use another terminal with the same sourced environment and domain to observe:
 
 ```bash
 ros2 topic echo /lbr_tutorial/status
@@ -77,90 +74,88 @@ ros2 topic echo /iiwa7/joint_states
 ros2 topic echo /lbr/joint_trajectory_controller/state
 ```
 
-物理反馈来自 `/iiwa7/joint_states`；控制器状态同时包含期望、实际和误差。只看到目标被发布不足以说明跟踪成功。
+Physical feedback comes from `/iiwa7/joint_states`. Controller state includes desired, actual, and error values. Publishing a target alone does not establish successful tracking.
 
-## 发送 ROS 2 关节目标
+## Send a ROS 2 joint goal
 
-系统已启动时，可直接从命令行发消息：
+With the system running, send a goal from the command line:
 
 ```bash
 ros2 topic pub --once /lbr_tutorial/joint_goal sensor_msgs/msg/JointState \
   "{name: [lbr_A1, lbr_A2, lbr_A3, lbr_A4, lbr_A5, lbr_A6, lbr_A7], position: [0.1, 0.4, 0.0, -1.1, 0.0, 0.9, 0.0]}"
 ```
 
-单位为弧度。节点收到完整目标后组装轨迹，由控制器执行。学生应先使用默认 demo，随后再更改数值并观察反馈。输入关节名称必须完整且唯一，目标须位于模型关节限制内。
+Positions are in radians. The motion node validates the complete goal and creates a trajectory for the controller. Start with the default demo, then change values and observe measured feedback. Joint names must be complete and unique, and targets must remain within model limits.
 
-末端输入使用 `/lbr_tutorial/pose_goal` 或 `/lbr_tutorial/cartesian_path`。实际数值应来自当前机器人 FK 或经过验证的目标，不应猜测一个 XYZ 和四元数就直接解释为可达目标。首个笛卡尔实验使用 `demo --mode cartesian`；消息字段和坐标约定见 [接口文档](interfaces.md)。
+End-effector inputs use `/lbr_tutorial/pose_goal` or `/lbr_tutorial/cartesian_path`. Obtain values from the current robot's FK or a validated target. Arbitrary XYZ coordinates and quaternions may be unreachable. Use `demo --mode cartesian` for the first experiment; see [interfaces](interfaces.md) for fields and frame conventions.
 
-默认后端会发布 `/lbr/ee_pose`，可先查看实际末端位姿：
+The default backend publishes `/lbr/ee_pose`. Inspect the measured pose:
 
 ```bash
 ros2 topic echo --once /lbr/ee_pose
 ```
 
-复制其中的 pose、使用 `frame_id: lbr_link_0` 并把 `stamp` 清零，即可构造保持当前位置的 `pose_goal`；之后只在一个方向增加约 0.01 m 做小位移实验。反馈中的采集时间戳不能原样用作目标时间戳。`existing` 后端没有该输出 topic，需从 `/lbr/joint_states` 使用相同模型计算 FK。
+For the default tutorial model, copy the pose, set `frame_id: lbr_link_0`, and set the timestamp to zero to construct a hold-position goal. Then try about 0.01 m along one axis. Do not reuse the feedback acquisition timestamp as the goal timestamp. The `existing` backend does not provide this topic; calculate FK from `/lbr/joint_states` with the same model. For configured workbench tools, follow the [TCP conventions](workbench.md).
 
-需要请求取消时：
+Request cancellation with:
 
 ```bash
 ros2 service call /lbr_tutorial/cancel std_srvs/srv/Trigger '{}'
 ```
 
-取消后观察状态返回，待系统空闲再提交下一个目标。
+Observe the final status and wait until idle before sending another goal.
 
-## 直接运行 LBR Stack 原始客户端
+## Run the original LBR Stack client
 
-在 `bringup` 已运行、环境和 domain 已设置好的第二终端执行：
+With `bringup` running, use a second terminal with the same environment and domain:
 
 ```bash
 /usr/bin/python3 scripts/upstream_joint_demo.py --ros-args -r __ns:=/lbr
 ```
 
-包装脚本直接加载保留原样的 `third_party/lbr_stack/joint_trajectory_client.py` 并调用其 `main()`。上游范例会先把奇数轴转到 1 rad，再回到全零，每段约 15 s，总计约 30 s。命名空间重映射使其相对 action 名落到 `/lbr/joint_trajectory_controller/follow_joint_trajectory`。
+The wrapper loads the unmodified `third_party/lbr_stack/joint_trajectory_client.py` and calls its `main()`. The upstream example moves odd-numbered joints to 1 rad, then returns all joints to zero. Each segment takes about 15 s, approximately 30 s total. Namespace remapping resolves its relative action to `/lbr/joint_trajectory_controller/follow_joint_trajectory`.
 
-这条路径直接验证上游客户端 → 同一个 JTC → 自定义硬件插件 → PyBullet；它不经过 `/lbr_tutorial/joint_goal` 的任务接收节点，因此运行期间不要同时提交其他目标。包装脚本补充运行入口，没有改写上游客户端算法。
+This checks the upstream client, the same JTC, the custom hardware plugin, and PyBullet. It bypasses the tutorial goal receiver; submit no other goals during this run. The wrapper adds an entry point without changing the upstream algorithm.
 
-## 使用已有 PyBullet 节点
+## Use an existing PyBullet node
 
-默认后端是本教程自己的 PyBullet 节点。要测试当前 `ros2_pybullet_ws` 中的仿真实现，先 source 其已构建的 overlay，再 source 本教程：
+The default backend is included in this repository. To test an existing `ros2_pybullet_ws` implementation, source its built overlay before this repository's overlay. Replace `/path/to/ros2_pybullet_ws` with its actual location:
 
 ```bash
-cd /home/siqin/ros2_workspaces/lbr_pybullet_ros
 source /opt/ros/humble/setup.bash
-source /home/siqin/ros2_workspaces/humble/ros2_pybullet_ws/install/local_setup.bash
+source /path/to/ros2_pybullet_ws/install/local_setup.bash
 source install/local_setup.bash
 export ROS_DOMAIN_ID=87
 ros2 launch lbr_pybullet_tutorial tutorial.launch.py sim_backend:=existing gui:=false
 ```
 
-该模式由 launch 启动已有仿真节点，要求已有 ROS 包已经安装。启动配置使用关节位置控制 `initial_control_mode:=1`、禁用旧 `goto` 控制 `use_goto:=false`，并使用与本教程相同的复位初始关节位置。这样 `/iiwa7/joint_desired` 是唯一的轨迹执行输入，不会同时运行两套相互覆盖的插值器。
+This launches the existing simulator and requires its ROS package to be installed. It uses joint position control (`initial_control_mode:=1`), disables legacy `goto` control (`use_goto:=false`), and resets to the same initial positions as the tutorial. Thus `/iiwa7/joint_desired` is the sole trajectory input, avoiding two interpolators overwriting commands.
 
-已有节点为 `pybullet_ros2_sim/iiwa_pybullet_sim_node`。启动参数名为 `reset_to_init_on_start:=true`，初始关节值为 `[0.0, 0.35, 0.0, -0.9, 0.0, 0.65, 0.0]` rad。脚本也支持直接运行：
+The existing node is `pybullet_ros2_sim/iiwa_pybullet_sim_node`. Launch parameters include `reset_to_init_on_start:=true` and initial positions `[0.0, 0.35, 0.0, -0.9, 0.0, 0.65, 0.0]` rad. The wrapper also supports:
 
 ```bash
+export LBR_TUTORIAL_LEGACY_WS=/path/to/ros2_pybullet_ws
 ./scripts/run_demo.sh joint sim_backend:=existing
 ./scripts/run_demo.sh cartesian sim_backend:=existing
 ```
 
-若已有工作区放在其他位置，设置 `LBR_TUTORIAL_LEGACY_WS=/实际路径` 后再调用脚本。
+Use the actual workspace path. Run only one simulator for a given `iiwa7` instance. If its namespace, message types, joint count, or model differ, update and validate the adapter configuration first. Matching topic names alone do not establish compatibility.
 
-不要另外再启动同一台 `iiwa7` 的仿真节点。若已有仿真以其他命名空间、消息类型、关节数量或模型启动，需要先修改适配配置并检查对应关系，不能仅凭 topic 名称相同认定兼容。
+For manual runs, source both overlays in the second terminal and run demos sequentially. Use `Ctrl+C` to stop the demo and launch when finished. Record `existing` results separately from default-backend results.
 
-在第二个终端同样 source 两个 overlay，然后运行两个 demo。完成后分别用 `Ctrl+C` 停止 demo 与 launch。`existing` 的通过结果需要单独记录，它不能用默认后端的结果替代。
+## Troubleshooting
 
-## 常见问题
+| Symptom | Check |
+| --- | --- |
+| No `ros2` or Python cannot import `rclpy` | Use system Python; source `/opt/ros/humble/setup.bash`. |
+| Tutorial packages unavailable | Complete `setup.sh`, then source `install/local_setup.bash`. |
+| Demo waits for an action or state | Match `ROS_DOMAIN_ID` across terminals; check launch and controllers. |
+| Controller waits for hardware state | Check advancing `/iiwa7/joint_states`, duplicate simulators, and namespaces. |
+| Action exists but system is not ready | Verify fresh measured joints and JTC state; an action server alone is insufficient. |
+| Goal rejected as busy | Wait for completion or request cancellation; new messages do not preempt. |
+| Pose rejected | Check frame, zero timestamp, finite values, quaternion, IK, and joint limits. |
+| `feedback/action timeout` | The fault is latched. Restore feedback, then restart tutorial bringup. |
+| GUI cannot open | Check with `gui:=false`; graphical mode requires a working desktop display. |
+| ROS shared-memory or discovery errors | Check the independent domain; leave unrelated workspace nodes running. |
 
-| 现象 | 检查方法 |
-|---|---|
-| 找不到 `ros2` 或 Python 无法导入 `rclpy` | 使用系统 Python，source `/opt/ros/humble/setup.bash` |
-| 找不到本教程的包 | 先成功执行 `setup.sh`，再 source `install/local_setup.bash` |
-| demo 等不到 action 或状态 | 确认所有终端 `ROS_DOMAIN_ID` 一致，检查 launch 进程与控制器状态 |
-| 控制器等待硬件状态 | 检查 `/iiwa7/joint_states` 是否持续更新，确认没有重复仿真或错误命名空间 |
-| action 存在但系统不 ready | 同时确认实测关节状态与 `/lbr/joint_trajectory_controller/state` 新鲜，action 存在本身不足以表示控制器正在更新 |
-| 目标返回 busy | 等待原目标完成或调用取消服务；新消息不会抢占正在执行的任务 |
-| 位姿被拒绝 | 检查 frame、零时间戳、有限数值与有效四元数，再检查 IK、关节限制 |
-| 提示 `feedback/action timeout` | 系统已锁定该故障，恢复反馈后仍需停止并重新启动 tutorial bringup |
-| GUI 无法打开 | 先用 `gui:=false` 验证链路；GUI 需要可用的桌面显示环境 |
-| ROS 报共享内存或发现异常 | 先确认项目使用独立 domain；不要停止本工作区中其他任务的节点 |
-
-依次排查：仿真状态持续更新 → 硬件接口已激活 → 控制器 active → action 存在 → demo 的 `accepted` 与最终状态 → 物理反馈和误差报告。
+Check in order: advancing simulator state, active hardware, active controllers, action availability, demo acceptance and final status, then physical feedback and error reports.

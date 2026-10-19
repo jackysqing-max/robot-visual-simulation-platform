@@ -2,7 +2,7 @@
 
 **Robot Workbench** is an English desktop application for robot model import, interchangeable instruments, TCP configuration, ROS 2 motion control, and live PyBullet visualization.
 
-[中文说明](README.zh-CN.md) · [Workbench guide](docs/workbench.md) · [ROS interfaces](docs/interfaces.md) · [Validation reports](docs/validation.md)
+[Quick start](docs/quickstart.md) · [Workbench guide](docs/workbench.md) · [ROS interfaces](docs/interfaces.md) · [Student plan](docs/student_plan.md) · [Validation reports](docs/validation.md)
 
 ![Robot Workbench with a probe and live Robot Monitor](docs/evidence/workbench/probe.png)
 
